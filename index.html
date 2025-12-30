@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lukas Derasmo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Orbitron', monospace;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .name {
+            font-size: clamp(4rem, 12vw, 10rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.05em;
+            margin-bottom: 2rem;
+            text-shadow: 
+                0 0 10px #00ffff,
+                0 0 20px #00ffff,
+                0 0 40px #00ffff,
+                0 0 80px #00ffff;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        .contact {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 400;
+            line-height: 1.6;
+            letter-spacing: 0.02em;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+        
+        .contact a {
+            color: #00ffff;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s ease;
+            text-shadow: 
+                0 0 5px #00ffff,
+                0 0 10px #00ffff;
+        }
+        
+        .contact a:hover {
+            border-bottom-color: #00ffff;
+            text-shadow: 
+                0 0 15px #00ffff,
+                0 0 25px #00ffff;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 
+                    0 0 10px #00ffff,
+                    0 0 20px #00ffff,
+                    0 0 40px #00ffff,
+                    0 0 80px #00ffff;
+            }
+            to {
+                text-shadow: 
+                    0 0 20px #00ffff,
+                    0 0 30px #00ffff,
+                    0 0 60px #00ffff,
+                    0 0 100px #00ffff;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="name">Lukas Derasmo</h1>
+        <div class="contact">
+            <div>516 778-4003</div>
+            <div><a href="mailto:lukasderasmo@gmail.com">lukasderasmo@gmail.com</a></div>
+            <div><a href="https://www.linkedin.com/in/lukas-derasmo/" target="_blank">www.linkedin.com/in/lukas-derasmo</a></div>
+        </div>
+    </div>
+</body>
+</html>
