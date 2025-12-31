@@ -17,23 +17,33 @@
                 linear-gradient(to bottom, #1e4d5f 0%, #2d6a7e 50%, #3b7a94 100%);
             color: #ffffff;
             font-family: Garamond, 'Times New Roman', serif;
-            font-size: 16px;
+            font-size: 20px;          /* larger text */
             padding: 20px;
             min-height: 100vh;
             position: relative;
+            overflow: hidden;
         }
 
+        /* animated static layer */
         body::before {
             content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, transparent 1px, transparent 2px, rgba(255,255,255,0.03) 3px),
-                repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0px, transparent 1px, transparent 2px, rgba(255,255,255,0.03) 3px);
+            position: fixed;
+            inset: 0;
             pointer-events: none;
+            background-image:
+                repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0px, transparent 1px, transparent 2px, rgba(255,255,255,0.04) 3px),
+                repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0px, transparent 1px, transparent 2px, rgba(255,255,255,0.03) 3px);
+            mix-blend-mode: soft-light;
+            opacity: 0.22;
+            animation: staticShift 2.5s steps(4) infinite;
+        }
+
+        @keyframes staticShift {
+            0%   { transform: translate(0, 0); }
+            25%  { transform: translate(-3px, 2px); }
+            50%  { transform: translate(2px, -3px); }
+            75%  { transform: translate(-2px, -1px); }
+            100% { transform: translate(0, 0); }
         }
 
         .container {
@@ -46,32 +56,64 @@
         .phone,
         .contact,
         .contact a {
-            font-size: 16px;
+            font-size: 1.1em;    /* slightly larger than base */
             font-weight: 400;
             color: #ffffff;
-            line-height: 1.6;
+            line-height: 1.8;
             text-decoration: none;
-            text-shadow: 
-                0 0 3px rgba(255, 255, 255, 0.6),
-                0 0 5px rgba(255, 255, 255, 0.4);
-            letter-spacing: 0.5px;
+            text-shadow:
+                0 0 2px rgba(255,255,255,0.9),
+                0 0 4px rgba(255,255,255,0.7),
+                0 0 8px rgba(255,255,255,0.4);  /* fuzzier glow */
+            letter-spacing: 0.6px;
             text-transform: lowercase;
         }
 
         .contact a:hover {
             text-decoration: underline;
-            text-shadow: 
-                0 0 4px rgba(255, 255, 255, 0.7),
-                0 0 6px rgba(255, 255, 255, 0.5);
+            text-shadow:
+                0 0 3px rgba(255,255,255,0.9),
+                0 0 6px rgba(255,255,255,0.7);
+        }
+
+        /* icon + handle layout */
+        .social {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .social-icon {
+            width: 22px;
+            height: 22px;
+            opacity: 0.9;
+            filter: drop-shadow(0 0 4px rgba(255,255,255,0.7));
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="name">lukas derasmo</div>
+        <div class="name">Lukas Derasmo</div>
         <div class="phone">(516) 778-4003</div>
+
         <div class="contact">lukasderasmo@gmail.com</div>
-        <div class="contact"><a href="https://www.linkedin.com/in/lukas-derasmo" target="_blank">www.linkedin.com/in/lukas-derasmo</a></div>
+
+        <!-- Instagram handle with icon -->
+        <div class="contact">
+            <span class="social">
+                <img src="instagram-icon.png" alt="Instagram" class="social-icon">
+                <span>@lukasderasmo</span>
+            </span>
+        </div>
+
+        <!-- LinkedIn handle with icon -->
+        <div class="contact">
+            <span class="social">
+                <img src="linkedin-icon.png" alt="LinkedIn" class="social-icon">
+                <a href="https://www.linkedin.com/in/lukas-derasmo" target="_blank">@lukas-derasmo</a>
+            </span>
+        </div>
     </div>
 </body>
 </html>
