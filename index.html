@@ -5,101 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lukas Derasmo</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            background: #0a0a0a;
-            color: #ffffff !important;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            min-height: 100vh;
-            padding-top: 15vh;
-            text-align: center;
-            overflow: hidden;
+            background: #000000;
+            color: #ffffff;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            padding: 20px;
         }
-        
+
         .container {
-            padding: 2rem;
+            text-align: right;
         }
-        
-        .name {
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-            margin-bottom: 1.5rem;
-            color: #ffffff !important;
-            text-shadow: 
-                0 0 8px #ffffff,
-                0 0 16px #ffffff;
-            animation: glow 3s ease-in-out infinite alternate;
-        }
-        
-        .phone {
-            font-size: clamp(1.5rem, 4vw, 2.2rem);
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            margin-bottom: 2rem;
-            color: #ffffff !important;
-            text-shadow: 
-                0 0 6px #ffffff,
-                0 0 12px #ffffff;
-            animation: glow 3s ease-in-out infinite alternate;
-        }
-        
-        .contact {
-            font-size: clamp(1rem, 2.5vw, 1.5rem);
-            font-weight: 400;
-            line-height: 1.8;
-            letter-spacing: 0.04em;
-            color: #ffffff !important;
-        }
-        
+
+        .name,
+        .phone,
+        .contact,
         .contact a {
-            color: #ffffff !important;
+            font-size: 14px;
+            font-weight: 400;
+            color: #ffffff;
+            line-height: 1.5;
             text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: all 0.3s ease;
-            text-shadow: 0 0 4px #ffffff;
         }
-        
+
         .contact a:hover {
-            border-bottom-color: #ffffff;
-            text-shadow: 0 0 8px #ffffff;
-        }
-        
-        @keyframes glow {
-            from {
-                text-shadow: 
-                    0 0 8px #ffffff,
-                    0 0 16px #ffffff;
-            }
-            to {
-                text-shadow: 
-                    0 0 12px #ffffff,
-                    0 0 20px #ffffff;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 1rem;
-            }
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="name">Lukas Derasmo</h1>
+        <div class="name">LUKAS DERASMO</div>
         <div class="phone">516 778-4003</div>
-        <div class="contact">
-            <div><a href="mailto:lukasderasmo@gmail.com">lukasderasmo@gmail.com</a></div>
-            <div><a href="https://www.linkedin.com/in/lukas-derasmo/" target="_blank">www.linkedin.com/in/lukas-derasmo</a></div>
-        </div>
-    </body>
+        <div class="contact">LUKASDERASMO@GMAIL.COM</div>
+        <div class="contact"><a href="https://www.linkedin.com/in/lukas-derasmo" target="_blank">WWW.LINKEDIN.COM/IN/LUKAS-DERASMO</a></div>
+    </div>
+</body>
 </html>
