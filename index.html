@@ -47,7 +47,7 @@ background:
             pointer-events: none;
             animation: 
                 gridStatic 0.5s steps(8) infinite,  /* FAST + JERKY */
-                gridNoise 0.3s steps(10) infinite;   /* MULTI-LAYER static */
+                gridNoise 0.1s steps(10) infinite;   /* MULTI-LAYER static */
         opacity: 0.7;        }
 
         @keyframes gridStatic {
@@ -57,9 +57,9 @@ background:
 
         @keyframes gridNoise {
             0% { background-position: 0px 0px; }
-            25% { background-position: 2px 1px; }
-            50% { background-position: -1px 3px; }
-            75% { background-position: 3px -2px; }
+            25% { background-position: 1px 1px; }
+            50% { background-position: 2px 2px; }
+            75% { background-position: 3px 3px; }
             100% { background-position: 0px 0px; }
         }
 
