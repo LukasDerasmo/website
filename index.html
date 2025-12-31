@@ -45,15 +45,9 @@ background:
                 repeating-linear-gradient(0deg, rgba(204,204,204,0.08) 0px, transparent 1px, transparent 2px, rgba(204,204,204,0.08) 3px),
                 repeating-linear-gradient(90deg, rgba(204,204,204,0.07) 0px, transparent 1px, transparent 2px, rgba(204,204,204,0.07) 3px);
             pointer-events: none;
-            animation: 
-                gridStatic 0.5s steps(8) infinite,  /* FAST + JERKY */
+            animation:
                 gridNoise 0.1s steps(10) infinite;   /* MULTI-LAYER static */
-        opacity: 0.7;        }
-
-        @keyframes gridStatic {
-            0% { background-position: 0 0, 0 0; }
-            100% { background-position: 8px 8px, 8px 8px; }
-        }
+        opacity: 0.9;        }
 
         @keyframes gridNoise {
             0% { background-position: 0px 0px; }
