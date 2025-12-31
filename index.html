@@ -15,21 +15,24 @@
             box-sizing: border-box;
         }
 
-        body {
+       body {
     background: 
-        linear-gradient(135deg, rgba(204,204,204,0.02) 0%, transparent 100%),
-        linear-gradient(to right, 
-            #1a0033 0%,      /* purple slash LEFT */
-            #1a0033 25%,     /* purple width */
-            #010101 25%,     /* black transition */
-            #010101 100%     /* black right side */
-        ),
+        /* BOTTOM layer first */
         linear-gradient(to bottom, 
             #010101 0%, 
             #1a0033 5.5%, 
             #010101 11%, 
             #010101 100%
-        );
+        ),
+        /* MIDDLE layer */
+        linear-gradient(to right, 
+            #1a0033 0%, 
+            #1a0033 25%, 
+            #010101 25%, 
+            #010101 100%
+        ),
+        /* TOP layer (static overlay) */
+        linear-gradient(135deg, rgba(204,204,204,0.02) 0%, transparent 100%);
                     font-family: 'Spectral', serif;
                     padding: 20px;
                     color: #f2f2f2;
@@ -57,7 +60,7 @@
             pointer-events: none;
             animation:
                 gridNoise 0.5s steps(10) infinite; 
-        opacity: 0.9;        }
+        opacity: 0.9;        };
 
         @keyframes gridNoise {
             0% { background-position: 0px 0px; }
@@ -130,8 +133,8 @@ text-align: center;
     </style>
 </head>
 <body>
+    <div class="name">Lukas Derasmo</div>
     <div class="container">
-        <div class="name">Lukas Derasmo</div>
         <div class="phone">(516) 778-4003</div>
         <div class="contact">lukasderasmo@gmail.com</div>
 
