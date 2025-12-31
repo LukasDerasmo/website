@@ -24,13 +24,6 @@
                     #010101 11%, 
                     #010101 100%
                 ),
-                /* MIDDLE layer */
-                linear-gradient(to right, 
-                    #1a0033 0%, 
-                    #1a0033 25%, 
-                    #010101 25%, 
-                    #010101 100%
-                ),
                 /* TOP layer (static overlay) */
                 linear-gradient(135deg, rgba(204,204,204,0.02) 0%, transparent 100%);
             font-family: 'Spectral', serif;
@@ -118,13 +111,23 @@
             gap: 10px;
             justify-content: center;
         }
+
+        /* EMOJI ICONS */
+        .emoji {
+            font-size: 20px;
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body>
     <div class="name">Lukas Derasmo</div>
     <div class="container">
-        <div class="phone">(516) 778-4003</div>
-        <div class="contact">lukasderasmo@gmail.com</div>
+        <div class="phone">
+            <span class="emoji">📱</span>(516) 778-4003
+        </div>
+        <div class="contact">
+            <span class="emoji">✉️</span>lukasderasmo@gmail.com
+        </div>
         <div class="contact">
             <span class="social">
                 <span style="font-size: 20px;">📸</span>
