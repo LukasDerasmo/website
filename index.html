@@ -18,8 +18,18 @@
         body {
 background: 
         linear-gradient(135deg, rgba(204,204,204,0.02) 0%, transparent 100%),
-        linear-gradient(to bottom, 
-            #010101 0%, #1a0a00 5.5%, #010101 11%, #010101 100%);
+        linear-gradient(to right, 
+        #1a0033 0%,      /* purple slash LEFT */
+        #1a0033 20%,     /* purple width */
+        #010101 20%,     /* black transition */
+        #010101 100%     /* black right side */
+        ),
+    linear-gradient(to bottom, 
+        #010101 0%, 
+        #1a0033 5.5%, 
+        #010101 11%, 
+        #010101 100%
+        );
                     font-family: 'Spectral', serif;
                     padding: 20px;
                     color: #f2f2f2;
