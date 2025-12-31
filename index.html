@@ -59,6 +59,10 @@
             margin-top: 220px;
             z-index: 1;
             position: relative;
+            min-height: 60vh; /* Push copyright to bottom */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .name {
@@ -117,46 +121,50 @@
             margin-right: 8px;
         }
 
-        /* COPYRIGHT */
+        /* COPYRIGHT - BOTTOM OF PAGE */
         .copyright {
-            margin-top: 60px;
-            font-size: 0.85em;
-            opacity: 0.7;
-            letter-spacing: 0.3px;
-            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75em; /* Smaller font */
+            opacity: 0.6;
+            letter-spacing: 0.2px;
+            font-family: 'Spectral', serif; /* Spectral font */
+            margin-top: auto; /* Push to bottom */
+            padding-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <div class="name">Lukas Derasmo</div>
     <div class="container">
-        <!-- LONGEST TO SHORTEST -->
-        <div class="contact">
-            <span class="emoji">📧</span>lukasderasmo@gmail.com
-        </div>
-        <div class="contact">
-            <span class="social">
-                <span class="emoji">💼</span>
-                <a href="https://www.linkedin.com/in/lukas-derasmo" target="_blank">/in/lukas-derasmo</a>
-            </span>
-        </div>
-        <div class="contact">
-            <span class="social">
-                <span class="emoji">💻</span>
-                <a href="https://github.com/LukasDerasmo/" target="_blank">@lukasderasmo</a>
-            </span>
-        </div>
-        <div class="contact">
-            <span class="social">
-                <span class="emoji">📸</span>
-                <a href="https://www.instagram.com/lukasderasmo/" target="_blank">@lukasderasmo</a>
-            </span>
-        </div>
-        <div class="phone">
-            <span class="emoji">📱</span>(516) 778-4003
+        <!-- CONTACTS -->
+        <div>
+            <!-- LONGEST TO SHORTEST -->
+            <div class="contact">
+                <span class="emoji">📧</span>lukasderasmo@gmail.com
+            </div>
+            <div class="contact">
+                <span class="social">
+                    <span class="emoji">💼</span>
+                    <a href="https://www.linkedin.com/in/lukas-derasmo" target="_blank">/in/lukas-derasmo</a>
+                </span>
+            </div>
+            <div class="contact">
+                <span class="social">
+                    <span class="emoji">💻</span>
+                    <a href="https://github.com/LukasDerasmo/" target="_blank">@lukasderasmo</a>
+                </span>
+            </div>
+            <div class="contact">
+                <span class="social">
+                    <span class="emoji">📸</span>
+                    <a href="https://www.instagram.com/lukasderasmo/" target="_blank">@lukasderasmo</a>
+                </span>
+            </div>
+            <div class="phone">
+                <span class="emoji">📱</span>(516) 778-4003
+            </div>
         </div>
         
-        <!-- COPYRIGHT -->
+        <!-- COPYRIGHT - STUCK TO BOTTOM -->
         <div class="copyright">
             © 2025 Lukas Derasmo. All rights reserved.
         </div>
