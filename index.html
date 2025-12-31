@@ -36,7 +36,7 @@
                 repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0px, transparent 1px, transparent 2px, rgba(255,255,255,0.06) 3px),
                 repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0px, transparent 1px, transparent 2px, rgba(255,255,255,0.05) 3px);
             pointer-events: none;
-            animation: gridStatic 1.5s linear infinite; /* faster + stronger */
+            animation: gridStatic 1.5s linear infinite;
         }
 
         @keyframes gridStatic {
@@ -50,7 +50,20 @@
             z-index: 1;
         }
 
-        .name,
+        .name {
+            font-size: 1.4em; /* bigger name */
+            font-weight: 400;
+            color: #ffffff;
+            line-height: 1.8;
+            text-shadow:
+                0 0 4px rgba(255,255,255,1),
+                0 0 8px rgba(255,255,255,0.9),
+                0 0 16px rgba(255,255,255,0.7),
+                0 0 24px rgba(255,255,255,0.5);
+            letter-spacing: 1px;
+            text-transform: capitalize; /* First letter of each word UPPERCASE */
+        }
+
         .phone,
         .contact,
         .contact a {
@@ -60,7 +73,7 @@
             line-height: 1.8;
             text-decoration: none;
             text-shadow:
-                0 0 4px rgba(255,255,255,1),     /* STRONGER glow */
+                0 0 4px rgba(255,255,255,1),
                 0 0 8px rgba(255,255,255,0.9),
                 0 0 16px rgba(255,255,255,0.7),
                 0 0 24px rgba(255,255,255,0.5);
@@ -88,7 +101,7 @@
             width: 22px;
             height: 22px;
             opacity: 0.9;
-            filter: drop-shadow(0 0 6px rgba(255,255,255,0.8)); /* stronger icon glow */
+            filter: drop-shadow(0 0 6px rgba(255,255,255,0.8));
         }
     </style>
 </head>
