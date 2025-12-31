@@ -14,29 +14,29 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background: 
-                /* BOTTOM layer first */
                 linear-gradient(to bottom, 
                     #010101 0%, 
                     #1a1a1a 5.85%, 
                     #010101 11.7%, 
                     #010101 100%
                 ),
-                /* TOP layer (static overlay) */
                 linear-gradient(135deg, rgba(204,204,204,0.02) 0%, transparent 100%);
             font-family: 'Spectral', serif;
-            padding: 20px;
             color: #f2f2f2;
             min-height: 100vh;
-            position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
-        /* SLOW DOWNWARD SCROLLING GRID */
+        /* SCROLLING GRID */
         body::before {
             content: '';
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
@@ -47,6 +47,7 @@
             pointer-events: none;
             animation: gridScroll 8s linear infinite;
             opacity: 0.6;
+            z-index: -1;
         }
 
         @keyframes gridScroll {
@@ -54,37 +55,72 @@
             100% { background-position: 0 60px, 0 60px; }
         }
 
-        .container {
-            text-align: center;
-            margin-top: 220px;
-            z-index: 1;
-            position: relative;
-            min-height: 60vh; /* Push copyright to bottom */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        /* MAIN LAYOUT */
+        .layout {
+            display: grid;
+            grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 80px;
+            padding: 80px 40px 40px;
+        }
+
+        /* LEFT SIDEBAR - STICKY */
+        .sidebar {
+            position: sticky;
+            top: 80px;
+            align-self: flex-start;
+            text-align: left;
         }
 
         .name {
-            position: absolute;
-            top: 10px;
-            left: 20px;
-            font-size: 2em;
+            font-size: 3.5em;
             font-weight: 400;
-            color: #f2f2f2;
-            line-height: 1.8;
             font-family: 'Montserrat', sans-serif;
+            line-height: 1.2;
+            margin-bottom: 20px;
             text-shadow:
                 0 0 3px rgba(204,204,204,0.6),
                 0 0 5px rgba(204,204,204,0.5),
                 0 0 8px rgba(204,204,204,0.4);
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             text-transform: capitalize;
         }
 
-        .phone,
+        .tagline {
+            font-size: 1.2em;
+            opacity: 0.8;
+            margin-bottom: 60px;
+            letter-spacing: 1px;
+            text-transform: lowercase;
+        }
+
+        .nav {
+            margin-bottom: 60px;
+        }
+
+        .nav a {
+            display: block;
+            font-size: 1.1em;
+            color: #f2f2f2;
+            text-decoration: none;
+            padding: 12px 0;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            text-transform: lowercase;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            opacity: 1;
+            text-shadow:
+                0 0 3px rgba(204,204,204,0.8),
+                0 0 8px rgba(204,204,204,0.6);
+        }
+
         .contact,
-        .contact a {
+        .phone {
             font-family: 'Spectral', serif;
             font-size: 1.1em;
             font-weight: 400;
@@ -93,53 +129,147 @@
             text-decoration: none;
             text-shadow:
                 0 0 3px rgba(204,204,204,0.6),
-                0 0 5px rgba(204,204,204,0.5),
-                0 0 8px rgba(204,204,204,0.4);
+                0 0 5px rgba(204,204,204,0.5);
             letter-spacing: 0.6px;
             text-transform: lowercase;
+            margin-bottom: 16px;
+        }
+
+        .contact a {
+            color: #f2f2f2;
+            text-decoration: none;
         }
 
         .contact a:hover {
             text-decoration: underline;
             text-shadow:
                 0 0 1px rgba(204,204,204,0.9),
-                0 0 3px rgba(204,204,204,0.85),
-                0 0 5px rgba(204,204,204,0.82),
-                0 0 14px rgba(204,204,204,0.8);
+                0 0 3px rgba(204,204,204,0.85);
         }
 
         .social {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            justify-content: center;
         }
 
-        /* EMOJI ICONS */
         .emoji {
             font-size: 20px;
             margin-right: 8px;
         }
 
-        /* COPYRIGHT - BOTTOM OF PAGE */
+        /* RIGHT CONTENT */
+        .content {
+            padding-bottom: 100px;
+        }
+
+        .content section {
+            margin-bottom: 120px;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .content section:nth-child(1) { animation-delay: 0.1s; }
+        .content section:nth-child(2) { animation-delay: 0.2s; }
+        .content section:nth-child(3) { animation-delay: 0.3s; }
+        .content section:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            font-size: 3em;
+            font-weight: 400;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            text-transform: lowercase;
+            opacity: 0.9;
+        }
+
+        /* PROJECT CARDS */
+        .project {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: rgba(26, 26, 26, 0.5);
+            border: 1px solid rgba(204, 204, 204, 0.1);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .project-info h3 {
+            font-size: 1.8em;
+            margin-bottom: 12px;
+            text-transform: lowercase;
+        }
+
+        .project-info p {
+            opacity: 0.8;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .tech span {
+            background: rgba(204, 204, 204, 0.1);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+
         .copyright {
-            font-size: 0.75em; /* Smaller font */
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px 0;
+            font-size: 0.85em;
             opacity: 0.6;
-            letter-spacing: 0.2px;
-            font-family: 'Spectral', serif; /* Spectral font */
-            margin-top: auto; /* Push to bottom */
-            padding-bottom: 20px;
+            font-family: 'Spectral', serif;
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 40px 20px;
+            }
+            .sidebar {
+                position: static;
+            }
+            .name {
+                font-size: 2.5em;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="name">Lukas Derasmo</div>
-    <div class="container">
-        <!-- CONTACTS -->
-        <div>
-            <!-- LONGEST TO SHORTEST -->
+    <div class="layout">
+        <!-- LEFT SIDEBAR -->
+        <aside class="sidebar">
+            <div class="name">Lukas Derasmo</div>
+            <div class="tagline">financial crimes analyst & developer</div>
+            
+            <nav class="nav">
+                <a href="#about">about</a>
+                <a href="#experience">experience</a>
+                <a href="#projects">projects</a>
+                <a href="#contact">contact</a>
+            </nav>
+
             <div class="contact">
-                <span class="emoji">📧</span>lukasderasmo@gmail.com
+                <span class="emoji">📧</span><a href="mailto:lukasderasmo@gmail.com">lukasderasmo@gmail.com</a>
             </div>
             <div class="contact">
                 <span class="social">
@@ -159,12 +289,63 @@
                     <a href="https://www.instagram.com/lukasderasmo/" target="_blank">@lukasderasmo</a>
                 </span>
             </div>
-            <div class="phone">
-                <span class="emoji">📱</span>(516) 778-4003
-            </div>
-        </div>
-        
-        <!-- COPYRIGHT - STUCK TO BOTTOM -->
+            <div class="phone">(516) 778-4003</div>
+        </aside>
+
+        <!-- RIGHT CONTENT -->
+        <main class="content">
+            <section id="about">
+                <h2>about</h2>
+                <p>College freshman at Binghamton University pursuing financial crimes analysis and corporate intelligence. Building expertise in Python, SQL, blockchain tracing, and swing trading strategies. Passionate about turning complex data into actionable intelligence.</p>
+            </section>
+
+            <section id="experience">
+                <h2>experience</h2>
+                <div class="project">
+                    <div class="project-info">
+                        <h3>binghamton university</h3>
+                        <p>Freshman studying business/finance with data science concentration. Courses in SQL, Power BI, financial analysis. Building portfolio projects for intelligence analyst roles.</p>
+                        <div class="tech">
+                            <span>SQL</span>
+                            <span>Python</span>
+                            <span>Power BI</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="projects">
+                <h2>projects</h2>
+                <div class="project">
+                    <div class="project-info">
+                        <h3>blockchain transaction tracer</h3>
+                        <p>Python tool using BlockCypher API to trace cryptocurrency transactions and visualize wallet networks. Deployed on GitHub with PostgreSQL backend.</p>
+                        <div class="tech">
+                            <span>Python</span>
+                            <span>PostgreSQL</span>
+                            <span>BlockCypher API</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project">
+                    <div class="project-info">
+                        <h3>swing trading backtester</h3>
+                        <p>Technical analysis platform built with thinkorswim data. Backtests strategies across 50+ symbols with risk/reward visualization.</p>
+                        <div class="tech">
+                            <span>Python</span>
+                            <span>thinkorswim</span>
+                            <span>Pandas</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact">
+                <h2>contact</h2>
+                <p>Ready to discuss financial intelligence projects, trading strategies, or career opportunities in corporate intelligence. Email or LinkedIn above.</p>
+            </section>
+        </main>
+
         <div class="copyright">
             © 2025 Lukas Derasmo. All rights reserved.
         </div>
