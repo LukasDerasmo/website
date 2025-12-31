@@ -24,7 +24,7 @@
             overflow: hidden;
         }
 
-        /* MORE NOTICEABLE animated grid */
+        /* PRONOUNCED STATICKY ANIMATION */
         body::before {
             content: '';
             position: absolute;
@@ -33,15 +33,26 @@
             right: 0;
             bottom: 0;
             background-image: 
-                repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0px, transparent 1px, transparent 2px, rgba(255,255,255,0.06) 3px),
-                repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0px, transparent 1px, transparent 2px, rgba(255,255,255,0.05) 3px);
+                repeating-linear-gradient(0deg, rgba(255,255,255,0.08) 0px, transparent 1px, transparent 2px, rgba(255,255,255,0.08) 3px),
+                repeating-linear-gradient(90deg, rgba(255,255,255,0.07) 0px, transparent 1px, transparent 2px, rgba(255,255,255,0.07) 3px);
             pointer-events: none;
-            animation: gridStatic 1.5s linear infinite;
+            animation: 
+                gridStatic 0.2s steps(8) infinite,  /* FAST + JERKY */
+                gridNoise 0.1s steps(4) infinite;   /* MULTI-LAYER static */
+            opacity: 0.4;
         }
 
         @keyframes gridStatic {
             0% { background-position: 0 0, 0 0; }
-            100% { background-position: 6px 6px, 6px 6px; }
+            100% { background-position: 8px 8px, 8px 8px; }
+        }
+
+        @keyframes gridNoise {
+            0% { background-position: 0px 0px; }
+            25% { background-position: 2px 1px; }
+            50% { background-position: -1px 3px; }
+            75% { background-position: 3px -2px; }
+            100% { background-position: 0px 0px; }
         }
 
         .container {
@@ -51,7 +62,7 @@
         }
 
         .name {
-            font-size: 1.4em; /* bigger name */
+            font-size: 1.4em;
             font-weight: 400;
             color: #ffffff;
             line-height: 1.8;
@@ -61,7 +72,7 @@
                 0 0 16px rgba(255,255,255,0.7),
                 0 0 24px rgba(255,255,255,0.5);
             letter-spacing: 1px;
-            text-transform: capitalize; /* First letter of each word UPPERCASE */
+            text-transform: capitalize;
         }
 
         .phone,
@@ -89,7 +100,6 @@
                 0 0 20px rgba(255,255,255,0.8);
         }
 
-        /* icon + handle layout */
         .social {
             display: inline-flex;
             align-items: center;
@@ -124,6 +134,14 @@
             <span class="social">
                 <span style="font-size: 20px;">💼</span>
                 <a href="https://www.linkedin.com/in/lukas-derasmo" target="_blank">@lukas-derasmo</a>
+            </span>
+        </div>
+
+        <!-- GitHub -->
+        <div class="contact">
+            <span class="social">
+                <span style="font-size: 20px;">💻</span>
+                <a href="https://github.com/LukasDerasmo/" target="_blank">@lukasderasmo</a>
             </span>
         </div>
     </div>
