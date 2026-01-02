@@ -92,7 +92,7 @@
             opacity: 0.8;
             margin-bottom: 60px;
             letter-spacing: 1px;
-            text-transform: lowercase;
+            text-transform: capitalize;
         }
 
         .nav {
@@ -108,7 +108,7 @@
             opacity: 0.7;
             transition: all 0.3s ease;
             letter-spacing: 0.5px;
-            text-transform: lowercase;
+            text-transform: capitalize;
         }
 
         .nav a:hover,
@@ -131,7 +131,7 @@
                 0 0 3px rgba(204,204,204,0.6),
                 0 0 5px rgba(204,204,204,0.5);
             letter-spacing: 0.6px;
-            text-transform: lowercase;
+            text-transform: capitalize;
             margin-bottom: 16px;
         }
 
@@ -187,7 +187,7 @@
             font-weight: 400;
             margin-bottom: 30px;
             letter-spacing: 1px;
-            text-transform: lowercase;
+            text-transform: capitalize;
             opacity: 0.9;
         }
 
@@ -206,7 +206,7 @@
         .project-info h3 {
             font-size: 1.8em;
             margin-bottom: 12px;
-            text-transform: lowercase;
+            text-transform: capitalize;
         }
 
         .project-info p {
@@ -227,16 +227,23 @@
             border-radius: 20px;
             font-size: 0.9em;
             opacity: 0.7;
+            text-transform: capitalize;
         }
 
         .copyright {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 40px 0;
-            font-size: 0.85em;
-            opacity: 0.6;
-            font-family: 'Spectral', serif;
-        }
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-size: 0.85em;
+        opacity: 0.6;
+        font-family: 'Spectral', serif;
+        width: 100%;
+        pointer-events: none;
+        z-index: 10;
+    }
+
 
         /* MOBILE */
         @media (max-width: 768px) {
@@ -259,13 +266,13 @@
         <!-- LEFT SIDEBAR -->
         <aside class="sidebar">
             <div class="name">Lukas Derasmo</div>
-            <div class="tagline">Financial crimes analyst & developer</div>
+            <div class="tagline">Financial Crimes Analyst & Developer</div>
             
             <nav class="nav">
                 <a href="#about">About</a>
                 <a href="#experience">Education</a>
                 <a href="#projects">Projects</a>
-                <a href="#work">Work experience</a>
+                <a href="#work">Work Experience</a>
                 <a href="#contact">Contact</a>
             </nav>
 
@@ -296,15 +303,15 @@
         <!-- RIGHT CONTENT -->
         <main class="content">
             <section id="about">
-                <h2>about</h2>
+                <h2>About</h2>
                 <p>College freshman at Binghamton University pursuing financial crimes analysis and corporate intelligence. Building technical expertise in Python, SQL and associated software.</p>
             </section>
 
             <section id="experience">
-                <h2>education</h2>
+                <h2>Education</h2>
                 <div class="project">
                     <div class="project-info">
-                        <h3>Binghamton University | c/o 2029</h3>
+                        <h3>Binghamton University | C/O 2029</h3>
                         <p>Studying business administration with business analytics concentration. Source Project researcher. Involvement in Marketing/Finance Societies. Scored to assist the club cross country team in qualifying for the national championship.</p>
                         <div class="tech">
                             <span>GPA: 4.0/4.0</span>
@@ -313,7 +320,7 @@
                 </div>
                 <div class="project">
                     <div class="project-info">
-                        <h3>Paul D. Schreiber HS | c/o 2025</h3>
+                        <h3>Paul D. Schreiber HS | C/O 2025</h3>
                         <p>Advanced Regents Diploma. Principal's Honor Roll Recipient all 8 semesters. AP Scholar with Distinction, National Merit Scholar Competition Commended. NYS Public High School Scholar Athlete Award (2x State Championship Qualifier for Cross Country, 1x for Track). 2x AATI National Italian Exam Bronze Medalist.</p>
                         <div class="tech">
                             <span>GPA: 4.52/4.50</span>
@@ -322,24 +329,12 @@
                     </div>
                 </div>
             </section>
-<!--
+
             <section id="projects">
-                <h2>projects</h2>
+                <h2>Projects</h2>
                 <div class="project">
                     <div class="project-info">
-                        <h3>blockchain transaction tracer (IN PROGRESS)</h3>
-                        <p>Python tool using BlockCypher API to trace cryptocurrency transactions and visualize wallet networks.</p>
-                        <div class="tech">
-                            <span>Python</span>
-                            <span>PostgreSQL</span>
-                            <span>BlockCypher API</span>
-                        </div>
-                    </div>
-                </div>
--->
-                <div class="project">
-                    <div class="project-info">
-                        <h3>ransomware analysis</h3>
+                        <h3>Ransomware Analysis</h3>
                         <p>Developed fraud detection system analyzing 284,807 European credit card transactions using PCA-transformed features for GDPR compliance, identifying 492 fraudulent cases totaling $60,127 in exposure. Deployed on GitHub with PostgreSQL backend.</p>
                         <div class="tech">
                             <span>SQL</span>
@@ -350,11 +345,11 @@
                 </div>
                 <div class="project">
                     <div class="project-info">
-                        <h3>swing trading</h3>
+                        <h3>Swing Trading</h3>
                         <p>Created comprehensive database of 200+ stock charts analyzing breakout patterns, developed advanced scanner configurations to identify high-probability setups, and built technical expertise in market trend analysis and trade execution.</p>
                         <div class="tech">
                             <span>Technical Analysis</span>
-                            <span>thinkorswim</span>
+                            <span>Thinkorswim</span>
                             <span>Risk Management</span>
                             <span>Notion</span>
                         </div>
@@ -363,8 +358,8 @@
             </section>
 
             <section id="work">
-                <div class="project-info">
-                <h2>work experience</h2>
+                <h2>Work Experience</h2>
+                <div class="project">
                     <div class="project-info">
                         <h3>Manorhaven Park & Pool</h3>
                         <p>Ensured a safe swimming environment by monitoring patron behavior and enforcing facility rules. Used quick decision making in response to any emergency situation and provided first aid as needed. Surveyed over 500 patrons daily, providing aid when needed while maintaining open communication. Leadership role in designing shift schedules, ensuring up-to-date restocking of first aid supplies. </p>
@@ -375,14 +370,14 @@
                             <span>Red Cross/Nassau County Certification</span>
                         </div>
                     </div>
+                </div>
             </section>
             
             <section id="contact">
-                <h2>contact</h2>
+                <h2>Contact</h2>
                 <p>Ready to discuss career opportunities. Email, Phone or LinkedIn above.</p>
             </section>
         </main>
-
         <div class="copyright">
             © 2026 Lukas Derasmo. All rights reserved. Website programmed with HTML.
         </div>
