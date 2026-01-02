@@ -7,7 +7,8 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;700&family=Raleway:wght@500&family=Lato:wght@400;500;700&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    <!-- Updated fonts: Orbitron for headings, keep Spectral for body readability [web:24] -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Spectral:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -20,202 +21,192 @@
         }
 
         body {
-            background: 
-                linear-gradient(to bottom, 
-                    #e3d1c8 0%, 
-                    #f2e8dc 100%
-                );
+            /* Custom color scheme [generated_image:23] */
+            background-color: #FFECD1;
             font-family: 'Spectral', serif;
-            color: #241913;
+            color: #001524;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* SCROLLING GRID */
-        body::before {
-            content: '';
+        /* NAV BAR like Yeezy [web:29][generated_image:23] */
+        .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            background-image: 
-                repeating-linear-gradient(0deg, rgba(121,110,95,0.15) 0px, transparent 1px, transparent 2px, rgba(121,110,95,0.15) 3px),
-                repeating-linear-gradient(90deg, rgba(121,110,95,0.12) 0px, transparent 1px, transparent 2px, rgba(121,110,95,0.12) 3px);
-            pointer-events: none;
-            animation: gridScroll 4s linear infinite;
-            z-index: -1;
+            background: #001524;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(120,41,15,0.3);
         }
 
-        @keyframes gridScroll {
-            0% { background-position: 0 0, 0 0; }
-            100% { background-position: 0 1080px, 0 1080px; }
-        }
-
-        /* MAIN LAYOUT */
-        .layout {
-            display: grid;
-            grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
-            max-width: 1400px;
-            margin: 0 auto;
-            gap: 80px;
-            padding: 80px 40px 40px;
-        }
-
-        }
-        /* LEFT SIDEBAR - STICKY + DARKER BACKGROUND */
-        .sidebar {
-            position: sticky;
-            top: 80px;
-            align-self: flex-start;
-            text-align: left;
-            background: rgba(36,25,19,0.3);
-            padding: 40px;
-            border-radius: 12px;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(28,25,19,0.3);
-            box-shadow: 
-                8px 0 20px rgba(36,25,19,0.15),
-                inset 0 0 20px rgba(227,209,200,0.1);
-            z-index: 2;
-        }
         .name {
-            font-size: 3.5em;
-            font-weight: 400;
-            font-family: 'Spectral', serif;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
+            font-family: 'Orbitron', monospace;
+            font-size: 2.2em;
+            font-weight: 900;
+            color: #FFECD1;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            color: #020873;
         }
 
-        .tagline {
-            font-size: 1.2em;
-            opacity: 0.85;
-            margin-bottom: 60px;
-            letter-spacing: 1px;
-            text-transform: capitalize;
-            color: #241913;
+        .contact-icons {
+            display: flex;
+            gap: 20px;
         }
 
-        .nav {
-            margin-bottom: 60px;
-        }
-
-        .nav a {
-            display: block;
-            font-size: 1.1em;
-            color: #241913;
-            text-decoration: none;
-            padding: 12px 0;
-            opacity: 0.75;
-            transition: all 0.3s ease;
-            letter-spacing: 0.5px;
-            text-transform: capitalize;
-        }
-
-        .nav a:hover,
-        .nav a.active {
-            opacity: 1;
-            text-shadow:
-                0 0 3px rgba(51,55,130,0.6),
-                0 0 8px rgba(51,55,130,0.4);
-            color: #333782;
-        }
-
-        .contact {
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #15616D;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-family: 'Spectral', serif;
-            font-size: 1.1em;
-            font-weight: 400;
-            color: #241913;
-            line-height: 1.8;
+            justify-content: center;
+            color: #FFECD1;
+            font-size: 1.2em;
             text-decoration: none;
-            letter-spacing: 0.6px;
-            margin-bottom: 16px;
-            text-transform: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
 
-        .contact a {
-            color: #241913;
-            text-decoration: none;
-            text-transform: lowercase;
+        .contact-icon:hover {
+            background: #FF7D00;
+            transform: scale(1.1);
+            border-color: #FFECD1;
         }
 
-        .contact a:hover {
-            text-decoration: underline;
-            color: #333782;
-            text-shadow:
-                0 0 1px rgba(51,55,130,0.8),
-                0 0 3px rgba(51,55,130,0.6);
+        /* MAIN CONTENT - Yeezy-style catalog grid [web:29][generated_image:23] */
+        .catalog {
+            padding: 140px 40px 80px;
+            max-width: 1920px;
+            margin: 0 auto;
         }
 
-        .emoji {
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
-        /* RIGHT CONTENT */
-        .content {
-            padding-bottom: 25px;
-        }
-
-        .content section {
-            margin-bottom: 120px;
-            opacity: 0;
-            transform: translateY(40px);
-            animation: fadeInUp 0.8s ease forwards;
-        }
-
-        .content section:nth-child(1) { animation-delay: 0.1s; }
-        .content section:nth-child(2) { animation-delay: 0.2s; }
-        .content section:nth-child(3) { animation-delay: 0.3s; }
-        .content section:nth-child(4) { animation-delay: 0.4s; }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        h2 {
-            font-size: 3em;
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 4em;
             font-weight: 400;
-            margin-bottom: 30px;
-            letter-spacing: 1px;
-            text-transform: capitalize;
-            opacity: 0.95;
-            color: #241913;
+            color: #001524;
+            text-align: center;
+            margin-bottom: 80px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
         }
 
-        /* PROJECT CARDS */
-        .project {
-            display: flex;
+        /* PROJECT GRID - 4x3 responsive like Yeezy [web:11][generated_image:23] */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 40px;
-            margin-bottom: 60px;
+            max-width: 1400px;
+            margin: 0 auto 120px;
+        }
+
+        .project-card {
+            aspect-ratio: 1;
+            background: #FFECD1;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 12px 40px rgba(120,41,15,0.25);
+            border: 2px solid transparent;
+        }
+
+        .project-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 24px 60px rgba(120,41,15,0.4);
+            border-color: #FF7D00;
+        }
+
+        /* Thumbnail background - use your project images or placeholders */
+        .project-thumb {
+            width: 100%;
+            height: 70%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* Blurred/muted overlay for thumb like earlier discussion */
+        .project-thumb::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,21,36,0.6);
+            backdrop-filter: blur(4px);
+        }
+
+        .project-code {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #FF7D00 !important;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            z-index: 2;
+        }
+
+        /* Project modals/popups */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,21,36,0.95);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
             padding: 40px;
-            background: rgba(227,209,200,0.6);
-            border: 1px solid rgba(36,25,19,0.2);
-            border-radius: 8px;
-            backdrop-filter: blur(10px);
         }
 
-        .project-info h3 {
-            font-size: 1.8em;
-            margin-bottom: 12px;
-            text-transform: capitalize;
-            color: #020873;
+        .modal.active {
+            display: flex;
         }
 
-        .project-info p {
-            opacity: 0.85;
-            line-height: 1.6;
+        .modal-content {
+            background: #FFECD1;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border-radius: 16px;
+            padding: 40px;
+            position: relative;
+            border: 2px solid #15616D;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            color: #78290F;
+            cursor: pointer;
+            font-weight: 900;
+        }
+
+        .modal h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5em;
+            color: #001524;
             margin-bottom: 20px;
-            color: #241913;
+            letter-spacing: 2px;
+        }
+
+        .modal p {
+            line-height: 1.7;
+            color: #001524;
+            margin-bottom: 24px;
+            font-size: 1.1em;
         }
 
         .tech {
@@ -225,160 +216,150 @@
         }
 
         .tech span {
-            background: rgba(51,55,130,0.15);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            opacity: 0.85;
-            text-transform: capitalize;
-            color: #241913;
-            border: 1px solid rgba(3,8,115,0.2);
+            background: rgba(21,97,109,0.2);
+            color: #001524;
+            padding: 8px 16px;
+            border-radius: 24px;
+            font-size: 0.95em;
+            font-family: 'Orbitron', monospace;
+            letter-spacing: 1px;
         }
 
         .copyright {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
             text-align: center;
-            font-size: 0.85em;
-            opacity: 0.6;
-            font-family: 'Spectral', serif;
-            width: 100%;
-            pointer-events: none;
-            z-index: 10;
-            color: #241913;
+            padding: 40px;
+            font-size: 0.9em;
+            color: #78290F;
+            opacity: 0.8;
+            font-family: 'Orbitron', monospace;
         }
 
-        /* MOBILE */
+        /* Mobile */
         @media (max-width: 768px) {
-            .layout {
-                grid-template-columns: 1fr;
-                gap: 40px;
-                padding: 40px 20px;
-            }
-            .sidebar {
-                position: static;
+            .navbar {
+                padding: 16px 20px;
+                flex-direction: column;
+                gap: 16px;
             }
             .name {
+                font-size: 1.8em;
+            }
+            .project-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 24px;
+                padding: 0 20px;
+            }
+            .section-title {
                 font-size: 2.5em;
             }
         }
     </style>
 </head>
 <body>
-    <div class="layout">
-        <!-- LEFT SIDEBAR -->
-        <aside class="sidebar">
-            <div class="name">LUKAS DERASMO</div>
-            <div class="tagline">Student, Prospective Financial Crimes Analyst, Developer</div>
-            
-            <nav class="nav">
-                <a href="#about">About</a>
-                <a href="#experience">Education</a>
-                <a href="#projects">Projects</a>
-                <a href="#work">Work Experience</a>
-                <a href="#contact">Contact</a>
-            </nav>
+    <!-- Yeezy-style fixed nav [generated_image:23] -->
+    <nav class="navbar">
+        <div class="name">LUKAS DERASMO</div>
+        <div class="contact-icons">
+            <a href="mailto:lukasderasmo@gmail.com" class="contact-icon" title="Email">📧</a>
+            <a href="https://www.linkedin.com/in/lukas-derasmo" class="contact-icon" title="LinkedIn">💼</a>
+            <a href="https://github.com/LukasDerasmo/" class="contact-icon" title="GitHub">💻</a>
+            <a href="tel:+15167784003" class="contact-icon" title="Phone">📞</a>
+        </div>
+    </nav>
 
-            <div class="contact">
-                <span class="emoji">📧</span><a href="mailto:lukasderasmo@gmail.com">lukasderasmo@gmail.com</a>
+    <main class="catalog">
+        <!-- Sections with grids -->
+        <h2 class="section-title">Projects</h2>
+        <div class="project-grid">
+            <!-- Replace background-image URLs with your actual project screenshots -->
+            <div class="project-card" data-modal="ransomware">
+                <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/001524/FFECD1?text=Ransomware+Analysis')"></div>
+                <div class="project-code">PY-01</div>
             </div>
-            <div class="contact">
-                <span class="emoji">💼</span><a href="https://www.linkedin.com/in/lukas-derasmo" target="_blank">/in/lukas-derasmo</a>
+            <div class="project-card" data-modal="trading">
+                <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/001524/FFECD1?text=Swing+Trading')"></div>
+                <div class="project-code">SQL-02</div>
             </div>
-            <div class="contact">
-                <span class="emoji">💻</span><a href="https://github.com/LukasDerasmo/" target="_blank">@lukasderasmo</a>
-            </div>
-            <div class="contact">
-                <span class="emoji">📸</span><a href="https://www.instagram.com/lukasderasmo/" target="_blank">@lukasderasmo</a>
-            </div>
-            <div class="contact">
-                <span class="emoji">📞</span><a href="tel:+15167784003">(516) 778-4003</a>
-            </div>
-        </aside>
+            <!-- Add more cards as needed, up to 12 for full Yeezy grid [generated_image:23] -->
+        </div>
 
-        <!-- RIGHT CONTENT -->
-        <main class="content">
-            <section id="about">
-                <h2>About</h2>
-                <p>College freshman at Binghamton University pursuing financial crimes analysis and corporate intelligence. Building technical expertise in Python, SQL and associated software.</p>
-            </section>
+        <h2 class="section-title">Education</h2>
+        <div class="project-grid">
+            <div class="project-card" data-modal="binghamton">
+                <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/15616D/FFECD1?text=Binghamton+U')"></div>
+                <div class="project-code">EDU-01</div>
+            </div>
+            <div class="project-card" data-modal="hs">
+                <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/15616D/FFECD1?text=Paul+D.+Schreiber')"></div>
+                <div class="project-code">EDU-02</div>
+            </div>
+        </div>
 
-            <section id="experience">
-                <h2>Education</h2>
-                <div class="project">
-                    <div class="project-info">
-                        <h3>Binghamton University | C/O 2029</h3>
-                        <p>Studying business administration with business analytics concentration. Source Project researcher. Involvement in Marketing/Finance Societies. Scored to assist the club cross country team in qualifying for the national championship.</p>
-                        <div class="tech">
-                            <span>GPA: 4.0/4.0</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project">
-                    <div class="project-info">
-                        <h3>Paul D. Schreiber HS | C/O 2025</h3>
-                        <p>Advanced Regents Diploma. Principal's Honor Roll Recipient all 8 semesters. AP Scholar with Distinction, National Merit Scholar Competition Commended. NYS Public High School Scholar Athlete Award (2x State Championship Qualifier for Cross Country, 1x for Track). 2x AATI National Italian Exam Bronze Medalist. Voice of Schreiber Award Recipient.</p>
-                        <div class="tech">
-                            <span>GPA: 4.52/4.50</span>
-                            <span>SAT: 1460/1600</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <h2 class="section-title">Experience</h2>
+        <div class="project-grid">
+            <div class="project-card" data-modal="pool">
+                <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/78290F/FFECD1?text=Manorhaven+Pool')"></div>
+                <div class="project-code">EXP-01</div>
+            </div>
+        </div>
+    </main>
 
-            <section id="projects">
-                <h2>Projects</h2>
-                <div class="project">
-                    <div class="project-info">
-                        <h3>Ransomware Analysis</h3>
-                        <p>Developed fraud detection system analyzing 284,807 European credit card transactions using PCA-transformed features for GDPR compliance, identifying 492 fraudulent cases totaling $60,127 in exposure. Deployed on GitHub with PostgreSQL backend.</p>
-                        <div class="tech">
-                            <span>SQL</span>
-                            <span>Power BI</span>
-                            <span>Anonymization Protocols</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="project">
-                    <div class="project-info">
-                        <h3>Swing Trading</h3>
-                        <p>Created comprehensive database of 200+ stock charts analyzing breakout patterns, developed advanced scanner configurations to identify high-probability setups, and built technical expertise in market trend analysis and trade execution.</p>
-                        <div class="tech">
-                            <span>Technical Analysis</span>
-                            <span>Thinkorswim</span>
-                            <span>Risk Management</span>
-                            <span>Notion</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="work">
-                <h2>Work Experience</h2>
-                <div class="project">
-                    <div class="project-info">
-                        <h3>Manorhaven Park & Pool</h3>
-                        <p>Ensured a safe swimming environment by monitoring patron behavior and enforcing facility rules. Used quick decision making in response to any emergency situation and provided first aid as needed. Surveyed over 500 patrons daily, providing aid when needed while maintaining open communication. Leadership role in designing shift schedules, ensuring up-to-date restocking of first aid supplies. </p>
-                        <div class="tech">
-                            <span>Leadership</span>
-                            <span>Organization</span>
-                            <span>CPR/AED Certification</span>
-                            <span>Red Cross/Nassau County Certification</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="contact">
-                <h2>Contact</h2>
-                <p>Ready to discuss career opportunities. See Email, Phone or LinkedIn.</p>
-            </section>
-        </main>
-        <div class="copyright">
-            © 2026 Lukas Derasmo. All rights reserved. Website programmed with HTML.
+    <!-- Modals for project details [web:11] -->
+    <div id="ransomware" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Ransomware Analysis</h3>
+            <p>Developed fraud detection system analyzing 284,807 European credit card transactions using PCA-transformed features for GDPR compliance, identifying 492 fraudulent cases totaling $60,127 in exposure. Deployed on GitHub with PostgreSQL backend.</p>
+            <div class="tech">
+                <span>SQL</span>
+                <span>Power BI</span>
+                <span>Anonymization Protocols</span>
+            </div>
         </div>
     </div>
+
+    <div id="trading" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Swing Trading</h3>
+            <p>Created comprehensive database of 200+ stock charts analyzing breakout patterns, developed advanced scanner configurations to identify high-probability setups, and built technical expertise in market trend analysis and trade execution.</p>
+            <div class="tech">
+                <span>Technical Analysis</span>
+                <span>Thinkorswim</span>
+                <span>Risk Management</span>
+                <span>Notion</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add modals for other projects similarly -->
+
+    <footer class="copyright">
+        © 2026 Lukas Derasmo. All rights reserved. [generated_image:23]
+    </footer>
+
+    <script>
+        // Clickable cards open modals
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const modalId = card.dataset.modal;
+                document.getElementById(modalId).classList.add('active');
+            });
+        });
+
+        // Close modals
+        document.querySelectorAll('.close-modal').forEach(close => {
+            close.addEventListener('click', (e) => {
+                e.target.closest('.modal').classList.remove('active');
+            });
+        });
+
+        // Close on outside click
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
