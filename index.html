@@ -7,8 +7,7 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Updated fonts: Orbitron for headings, keep Spectral for body readability [web:24] -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Spectral:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -21,34 +20,34 @@
         }
 
         body {
-            /* Custom color scheme [generated_image:23] */
-            background-color: #FFECD1;
-            font-family: 'Spectral', serif;
-            color: #001524;
+            /* New color scheme */
+            background-color: #BCABAE;
+            font-family: 'Orbitron', monospace;
+            color: #0F0F0F;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* NAV BAR like Yeezy [web:29][generated_image:23] */
+        /* Fixed nav */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: #001524;
+            background: #0F0F0F;
             padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 100;
-            box-shadow: 0 4px 20px rgba(120,41,15,0.3);
+            box-shadow: 0 4px 20px rgba(45,46,46,0.5);
         }
 
         .name {
             font-family: 'Orbitron', monospace;
             font-size: 2.2em;
             font-weight: 900;
-            color: #FFECD1;
+            color: #FBFBFB;
             letter-spacing: 3px;
             text-transform: uppercase;
         }
@@ -62,24 +61,51 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: #15616D;
+            background: #2D2E2E;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #FFECD1;
+            color: #FBFBFB;
             font-size: 1.2em;
             text-decoration: none;
             transition: all 0.3s ease;
             border: 2px solid transparent;
+            cursor: pointer;
         }
 
         .contact-icon:hover {
-            background: #FF7D00;
+            background: #716969;
             transform: scale(1.1);
-            border-color: #FFECD1;
+            border-color: #FBFBFB;
         }
 
-        /* MAIN CONTENT - Yeezy-style catalog grid [web:29][generated_image:23] */
+        /* Contact reveal popup */
+        .contact-popup {
+            display: none;
+            position: fixed;
+            top: 100px;
+            right: 40px;
+            background: #2D2E2E;
+            color: #FBFBFB;
+            padding: 20px 24px;
+            border-radius: 8px;
+            box-shadow: 0 12px 40px rgba(15,15,15,0.8);
+            z-index: 150;
+            font-family: 'Orbitron', monospace;
+            min-width: 220px;
+        }
+
+        .contact-popup.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Catalog */
         .catalog {
             padding: 140px 40px 80px;
             max-width: 1920px;
@@ -90,14 +116,14 @@
             font-family: 'Orbitron', monospace;
             font-size: 4em;
             font-weight: 400;
-            color: #001524;
+            color: #0F0F0F;
             text-align: center;
             margin-bottom: 80px;
             letter-spacing: 4px;
             text-transform: uppercase;
         }
 
-        /* PROJECT GRID - 4x3 responsive like Yeezy [web:11][generated_image:23] */
+        /* Project grid */
         .project-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -108,23 +134,22 @@
 
         .project-card {
             aspect-ratio: 1;
-            background: #FFECD1;
+            background: #BCABAE;
             border-radius: 12px;
             overflow: hidden;
             position: relative;
             cursor: pointer;
             transition: all 0.4s ease;
-            box-shadow: 0 12px 40px rgba(120,41,15,0.25);
+            box-shadow: 0 12px 40px rgba(113,105,105,0.4);
             border: 2px solid transparent;
         }
 
         .project-card:hover {
             transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 24px 60px rgba(120,41,15,0.4);
-            border-color: #FF7D00;
+            box-shadow: 0 24px 60px rgba(113,105,105,0.6);
+            border-color: #716969;
         }
 
-        /* Thumbnail background - use your project images or placeholders */
         .project-thumb {
             width: 100%;
             height: 70%;
@@ -133,12 +158,11 @@
             position: relative;
         }
 
-        /* Blurred/muted overlay for thumb like earlier discussion */
         .project-thumb::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(0,21,36,0.6);
+            background: rgba(15,15,15,0.7);
             backdrop-filter: blur(4px);
         }
 
@@ -150,78 +174,87 @@
             font-family: 'Orbitron', monospace;
             font-size: 1.1em;
             font-weight: 700;
-            color: #FF7D00 !important;
+            color: #FBFBFB !important;
             letter-spacing: 2px;
             text-transform: uppercase;
             z-index: 2;
         }
 
-        /* Project modals/popups */
-        .modal {
+        /* FULLSCREEN PROJECT DETAIL - takes over screen */
+        .fullscreen-detail {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,21,36,0.95);
-            backdrop-filter: blur(8px);
-            z-index: 200;
+            background: #0F0F0F;
+            z-index: 300;
+            padding: 80px 40px;
+            overflow-y: auto;
+            color: #FBFBFB;
+        }
+
+        .fullscreen-detail.active {
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 40px;
+            text-align: center;
+            gap: 40px;
         }
 
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: #FFECD1;
-            max-width: 800px;
-            max-height: 80vh;
+        .detail-content {
+            max-width: 900px;
+            max-height: 90vh;
             overflow-y: auto;
-            border-radius: 16px;
-            padding: 40px;
-            position: relative;
-            border: 2px solid #15616D;
         }
 
-        .close-modal {
+        .detail-back {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 2em;
-            color: #78290F;
-            cursor: pointer;
-            font-weight: 900;
-        }
-
-        .modal h3 {
+            top: 30px;
+            left: 40px;
+            background: #2D2E2E;
+            color: #FBFBFB;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
             font-family: 'Orbitron', monospace;
-            font-size: 2.5em;
-            color: #001524;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
         }
 
-        .modal p {
-            line-height: 1.7;
-            color: #001524;
+        .detail-back:hover {
+            background: #716969;
+        }
+
+        .detail-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 3.5em;
+            font-weight: 700;
             margin-bottom: 24px;
-            font-size: 1.1em;
+            letter-spacing: 3px;
         }
 
-        .tech {
+        .detail-desc {
+            font-size: 1.3em;
+            line-height: 1.7;
+            margin-bottom: 32px;
+            opacity: 0.95;
+        }
+
+        .detail-tech {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 16px;
+            justify-content: center;
         }
 
-        .tech span {
-            background: rgba(21,97,109,0.2);
-            color: #001524;
-            padding: 8px 16px;
+        .detail-tech span {
+            background: #2D2E2E;
+            color: #FBFBFB;
+            padding: 10px 20px;
             border-radius: 24px;
-            font-size: 0.95em;
-            font-family: 'Orbitron', monospace;
+            font-size: 1em;
+            font-weight: 500;
             letter-spacing: 1px;
         }
 
@@ -229,88 +262,69 @@
             text-align: center;
             padding: 40px;
             font-size: 0.9em;
-            color: #78290F;
+            color: #716969;
             opacity: 0.8;
             font-family: 'Orbitron', monospace;
         }
 
         /* Mobile */
         @media (max-width: 768px) {
-            .navbar {
-                padding: 16px 20px;
-                flex-direction: column;
-                gap: 16px;
-            }
-            .name {
-                font-size: 1.8em;
-            }
-            .project-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                gap: 24px;
-                padding: 0 20px;
-            }
-            .section-title {
-                font-size: 2.5em;
-            }
+            .navbar { padding: 16px 20px; flex-direction: column; gap: 16px; }
+            .name { font-size: 1.8em; }
+            .project-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; padding: 0 20px; }
+            .section-title { font-size: 2.5em; }
+            .fullscreen-detail { padding: 40px 20px; }
         }
     </style>
 </head>
 <body>
-    <!-- Yeezy-style fixed nav [generated_image:23] -->
+    <!-- Fixed nav -->
     <nav class="navbar">
         <div class="name">LUKAS DERASMO</div>
         <div class="contact-icons">
-            <a href="mailto:lukasderasmo@gmail.com" class="contact-icon" title="Email">📧</a>
-            <a href="https://www.linkedin.com/in/lukas-derasmo" class="contact-icon" title="LinkedIn">💼</a>
-            <a href="https://github.com/LukasDerasmo/" class="contact-icon" title="GitHub">💻</a>
-            <a href="tel:+15167784003" class="contact-icon" title="Phone">📞</a>
+            <div class="contact-icon" data-contact="email" title="Email">📧</div>
+            <div class="contact-icon" data-contact="linkedin" title="LinkedIn">💼</div>
+            <div class="contact-icon" data-contact="github" title="GitHub">💻</div>
+            <div class="contact-icon" data-contact="phone" title="Phone">📞</div>
         </div>
     </nav>
 
+    <!-- Contact popup -->
+    <div id="contact-popup" class="contact-popup"></div>
+
     <main class="catalog">
-        <!-- Sections with grids -->
         <h2 class="section-title">Projects</h2>
         <div class="project-grid">
-            <!-- Replace background-image URLs with your actual project screenshots -->
-            <div class="project-card" data-modal="ransomware">
-                <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/001524/FFECD1?text=Ransomware+Analysis')"></div>
+            <div class="project-card" data-detail="ransomware">
+                <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/0F0F0F/BCABAE?text=Ransomware')"></div>
                 <div class="project-code">PY-01</div>
             </div>
-            <div class="project-card" data-modal="trading">
-                <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/001524/FFECD1?text=Swing+Trading')"></div>
+            <div class="project-card" data-detail="trading">
+                <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/0F0F0F/BCABAE?text=Swing+Trading')"></div>
                 <div class="project-code">SQL-02</div>
             </div>
-            <!-- Add more cards as needed, up to 12 for full Yeezy grid [generated_image:23] -->
-        </div>
-
-        <h2 class="section-title">Education</h2>
-        <div class="project-grid">
-            <div class="project-card" data-modal="binghamton">
-                <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/15616D/FFECD1?text=Binghamton+U')"></div>
+            <div class="project-card" data-detail="binghamton">
+                <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/2D2E2E/BCABAE?text=Binghamton')"></div>
                 <div class="project-code">EDU-01</div>
             </div>
-            <div class="project-card" data-modal="hs">
-                <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/15616D/FFECD1?text=Paul+D.+Schreiber')"></div>
+            <div class="project-card" data-detail="hs">
+                <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/2D2E2E/BCABAE?text=High+School')"></div>
                 <div class="project-code">EDU-02</div>
             </div>
-        </div>
-
-        <h2 class="section-title">Experience</h2>
-        <div class="project-grid">
-            <div class="project-card" data-modal="pool">
-                <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/78290F/FFECD1?text=Manorhaven+Pool')"></div>
+            <div class="project-card" data-detail="pool">
+                <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/716969/BCABAE?text=Pool+Job')"></div>
                 <div class="project-code">EXP-01</div>
             </div>
         </div>
     </main>
 
-    <!-- Modals for project details [web:11] -->
-    <div id="ransomware" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h3>Ransomware Analysis</h3>
-            <p>Developed fraud detection system analyzing 284,807 European credit card transactions using PCA-transformed features for GDPR compliance, identifying 492 fraudulent cases totaling $60,127 in exposure. Deployed on GitHub with PostgreSQL backend.</p>
-            <div class="tech">
+    <!-- Fullscreen details -->
+    <div id="detail-ransomware" class="fullscreen-detail">
+        <button class="detail-back">← Back</button>
+        <div class="detail-content">
+            <h3 class="detail-title">Ransomware Analysis</h3>
+            <p class="detail-desc">Developed fraud detection system analyzing 284,807 European credit card transactions using PCA-transformed features for GDPR compliance, identifying 492 fraudulent cases totaling $60,127 in exposure. Deployed on GitHub with PostgreSQL backend.</p>
+            <div class="detail-tech">
                 <span>SQL</span>
                 <span>Power BI</span>
                 <span>Anonymization Protocols</span>
@@ -318,12 +332,12 @@
         </div>
     </div>
 
-    <div id="trading" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h3>Swing Trading</h3>
-            <p>Created comprehensive database of 200+ stock charts analyzing breakout patterns, developed advanced scanner configurations to identify high-probability setups, and built technical expertise in market trend analysis and trade execution.</p>
-            <div class="tech">
+    <div id="detail-trading" class="fullscreen-detail">
+        <button class="detail-back">← Back</button>
+        <div class="detail-content">
+            <h3 class="detail-title">Swing Trading</h3>
+            <p class="detail-desc">Created comprehensive database of 200+ stock charts analyzing breakout patterns, developed advanced scanner configurations to identify high-probability setups, and built technical expertise in market trend analysis and trade execution.</p>
+            <div class="detail-tech">
                 <span>Technical Analysis</span>
                 <span>Thinkorswim</span>
                 <span>Risk Management</span>
@@ -332,33 +346,62 @@
         </div>
     </div>
 
-    <!-- Add modals for other projects similarly -->
+    <!-- Add more fullscreen details as needed -->
 
     <footer class="copyright">
-        © 2026 Lukas Derasmo. All rights reserved. [generated_image:23]
+        © 2026 Lukas Derasmo. All rights reserved.
     </footer>
 
     <script>
-        // Clickable cards open modals
-        document.querySelectorAll('.project-card').forEach(card => {
+        // All project cards clickable
+        document.querySelectorAll('.project-card').forEach((card, index) => {
             card.addEventListener('click', () => {
-                const modalId = card.dataset.modal;
-                document.getElementById(modalId).classList.add('active');
+                const detailId = card.dataset.detail;
+                document.getElementById(`detail-${detailId}`).classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scroll
             });
         });
 
-        // Close modals
-        document.querySelectorAll('.close-modal').forEach(close => {
-            close.addEventListener('click', (e) => {
-                e.target.closest('.modal').classList.remove('active');
+        // Back buttons
+        document.querySelectorAll('.detail-back').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.fullscreen-detail.active').forEach(detail => {
+                    detail.classList.remove('active');
+                });
+                document.body.style.overflow = ''; // Restore scroll
             });
         });
 
-        // Close on outside click
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.classList.remove('active');
+        // Contact popups - all icons work
+        const contacts = {
+            email: 'lukasderasmo@gmail.com',
+            linkedin: 'linkedin.com/in/lukas-derasmo',
+            github: 'github.com/LukasDerasmo',
+            phone: '(516) 778-4003'
+        };
+
+        document.querySelectorAll('.contact-icon').forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                e.preventDefault();
+                const type = icon.dataset.contact;
+                const popup = document.getElementById('contact-popup');
+                popup.textContent = contacts[type];
+                popup.classList.add('active');
+
+                setTimeout(() => {
+                    popup.classList.remove('active');
+                }, 3000);
             });
+        });
+
+        // Close fullscreen on ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.fullscreen-detail.active').forEach(detail => {
+                    detail.classList.remove('active');
+                });
+                document.body.style.overflow = '';
+            }
         });
     </script>
 </body>
