@@ -22,11 +22,11 @@
         body {
             background: 
                 linear-gradient(to bottom, 
-                    #f2f2f2 0%, 
-                    #fff9e8 100%
+                    #e3d1c8 0%, 
+                    #f2e8dc 100%
                 );
             font-family: 'Spectral', serif;
-            color: #140a00;
+            color: #241913;
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -40,8 +40,8 @@
             right: 0;
             bottom: 0;
             background-image: 
-                repeating-linear-gradient(0deg, rgba(121,110,95,0.12) 0px, transparent 1px, transparent 2px, rgba(121,110,95,0.12) 3px),
-                repeating-linear-gradient(90deg, rgba(121,110,95,0.10) 0px, transparent 1px, transparent 2px, rgba(121,110,95,0.10) 3px);
+                repeating-linear-gradient(0deg, rgba(121,110,95,0.15) 0px, transparent 1px, transparent 2px, rgba(121,110,95,0.15) 3px),
+                repeating-linear-gradient(90deg, rgba(121,110,95,0.12) 0px, transparent 1px, transparent 2px, rgba(121,110,95,0.12) 3px);
             pointer-events: none;
             animation: gridScroll 4s linear infinite;
             z-index: -1;
@@ -77,16 +77,17 @@
             line-height: 1.2;
             margin-bottom: 20px;
             letter-spacing: 2px;
-            text-transform: capitalize;
-            color: #192d4b;
+            text-transform: uppercase;
+            color: #020873;
         }
 
         .tagline {
             font-size: 1.2em;
-            opacity: 0.8;
+            opacity: 0.85;
             margin-bottom: 60px;
             letter-spacing: 1px;
             text-transform: capitalize;
+            color: #241913;
         }
 
         .nav {
@@ -96,10 +97,10 @@
         .nav a {
             display: block;
             font-size: 1.1em;
-            color: #1a1a1a;
+            color: #241913;
             text-decoration: none;
             padding: 12px 0;
-            opacity: 0.7;
+            opacity: 0.75;
             transition: all 0.3s ease;
             letter-spacing: 0.5px;
             text-transform: capitalize;
@@ -109,8 +110,9 @@
         .nav a.active {
             opacity: 1;
             text-shadow:
-                0 0 3px rgba(121,110,95,0.8),
-                0 0 8px rgba(121,110,95,0.6);
+                0 0 3px rgba(51,55,130,0.6),
+                0 0 8px rgba(51,55,130,0.4);
+            color: #333782;
         }
 
         .contact {
@@ -120,28 +122,26 @@
             font-family: 'Spectral', serif;
             font-size: 1.1em;
             font-weight: 400;
-            color: #1a1a1a;
+            color: #241913;
             line-height: 1.8;
             text-decoration: none;
-            text-shadow:
-                0 0 3px rgba(121,110,95,0.6),
-                0 0 5px rgba(121,110,95,0.5);
             letter-spacing: 0.6px;
             margin-bottom: 16px;
             text-transform: none;
         }
 
         .contact a {
-            color: #1a1a1a;
+            color: #241913;
             text-decoration: none;
             text-transform: lowercase;
         }
 
         .contact a:hover {
             text-decoration: underline;
+            color: #333782;
             text-shadow:
-                0 0 1px rgba(121,110,95,0.9),
-                0 0 3px rgba(121,110,95,0.85);
+                0 0 1px rgba(51,55,130,0.8),
+                0 0 3px rgba(51,55,130,0.6);
         }
 
         .emoji {
@@ -179,7 +179,8 @@
             margin-bottom: 30px;
             letter-spacing: 1px;
             text-transform: capitalize;
-            opacity: 0.9;
+            opacity: 0.95;
+            color: #241913;
         }
 
         /* PROJECT CARDS */
@@ -188,8 +189,8 @@
             gap: 40px;
             margin-bottom: 60px;
             padding: 40px;
-            background: rgba(240, 237, 232, 0.7);
-            border: 1px solid rgba(121, 110, 95, 0.4);
+            background: rgba(227,209,200,0.6);
+            border: 1px solid rgba(36,25,19,0.2);
             border-radius: 8px;
             backdrop-filter: blur(10px);
         }
@@ -198,12 +199,14 @@
             font-size: 1.8em;
             margin-bottom: 12px;
             text-transform: capitalize;
+            color: #020873;
         }
 
         .project-info p {
-            opacity: 0.8;
+            opacity: 0.85;
             line-height: 1.6;
             margin-bottom: 20px;
+            color: #241913;
         }
 
         .tech {
@@ -213,13 +216,14 @@
         }
 
         .tech span {
-            background: rgba(121, 110, 95, 0.25);
+            background: rgba(51,55,130,0.15);
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.9em;
-            opacity: 0.8;
+            opacity: 0.85;
             text-transform: capitalize;
-            color: #1a1a1a;
+            color: #241913;
+            border: 1px solid rgba(3,8,115,0.2);
         }
 
         .copyright {
@@ -234,7 +238,7 @@
             width: 100%;
             pointer-events: none;
             z-index: 10;
-            color: #1a1a1a;
+            color: #241913;
         }
 
         /* MOBILE */
@@ -257,7 +261,7 @@
     <div class="layout">
         <!-- LEFT SIDEBAR -->
         <aside class="sidebar">
-            <div class="name">Lukas Derasmo</div>
+            <div class="name">LUKAS DERASMO</div>
             <div class="tagline">Student, Prospective Financial Crimes Analyst, Developer</div>
             
             <nav class="nav">
