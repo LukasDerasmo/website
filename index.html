@@ -7,7 +7,6 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Switched to Roboto [web:24 equivalent for Roboto] -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         * {
@@ -125,7 +124,7 @@
             text-transform: uppercase;
         }
 
-        /* Project grid - all cards clickable */
+        /* Project grid */
         .project-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -288,11 +287,11 @@
     <nav class="navbar">
         <div class="name">LUKAS DERASMO</div>
         <div class="contact-icons">
-            <!-- All now have data-contact and work -->
-            <a href="mailto:lukasderasmo@gmail.com" class="contact-icon" data-contact="email" title="Email">📧</a>
-            <a href="https://www.linkedin.com/in/lukas-derasmo" target="_blank" class="contact-icon" data-contact="linkedin" title="LinkedIn">💼</a>
-            <a href="https://github.com/LukasDerasmo/" target="_blank" class="contact-icon" data-contact="github" title="GitHub">💻</a>
-            <a href="https://www.instagram.com/lukasderasmo/" target="_blank" class="contact-icon" data-contact="instagram" title="Instagram">📸</a>
+            <!-- Email and Phone show popups, social links work directly -->
+            <div class="contact-icon" data-contact="email" title="Email">📧</div>
+            <a href="https://www.linkedin.com/in/lukas-derasmo" target="_blank" class="contact-icon" title="LinkedIn">💼</a>
+            <a href="https://github.com/LukasDerasmo/" target="_blank" class="contact-icon" title="GitHub">💻</a>
+            <a href="https://www.instagram.com/lukasderasmo/" target="_blank" class="contact-icon" title="Instagram">📸</a>
             <div class="contact-icon" data-contact="phone" title="Phone">📞</div>
         </div>
     </nav>
@@ -323,7 +322,6 @@
                 <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/716969/BCABAE?text=Pool+Job')"></div>
                 <div class="project-code">EXP-01</div>
             </div>
-            <!-- Added more for full grid -->
             <div class="project-card clickable" data-detail="crosscountry">
                 <div class="project-thumb" style="background-image: url('https://via.placeholder.com/400x280/716969/BCABAE?text=Cross+Country')"></div>
                 <div class="project-code">ATH-01</div>
@@ -331,7 +329,7 @@
         </div>
     </main>
 
-    <!-- Fullscreen details - all work -->
+    <!-- Fullscreen details -->
     <div id="detail-ransomware" class="fullscreen-detail">
         <button class="detail-back">← Back</button>
         <div class="detail-content">
@@ -364,8 +362,7 @@
             <h3 class="detail-title">Binghamton University</h3>
             <p class="detail-desc">College freshman studying business administration with business analytics concentration. GPA: 4.0/4.0. Source Project researcher.</p>
             <div class="detail-tech">
-                <span>GPA: 4.0</span>
-                <span>Business Analytics</span>
+                <span>GPA: 4.0/4.0</span>
             </div>
         </div>
     </div>
@@ -376,8 +373,8 @@
             <h3 class="detail-title">Paul D. Schreiber HS</h3>
             <p class="detail-desc">Advanced Regents Diploma. Principal's Honor Roll all 8 semesters. AP Scholar with Distinction. NYS Scholar Athlete (Cross Country/Track).</p>
             <div class="detail-tech">
-                <span>GPA: 4.52</span>
-                <span>SAT: 1460</span>
+                <span>GPA: 4.52/4.50</span>
+                <span>SAT: 1460/1600</span>
             </div>
         </div>
     </div>
@@ -411,7 +408,7 @@
     </footer>
 
     <script>
-        // ALL project cards clickable - added .clickable class and full coverage
+        // Project cards clickable
         document.querySelectorAll('.project-card').forEach(card => {
             card.addEventListener('click', () => {
                 const detailId = card.dataset.detail;
@@ -432,19 +429,17 @@
             });
         });
 
-        // Contact popups - ALL icons work with links preserved
+        // Contact popups - ONLY for email and phone (not social links)
         const contacts = {
             email: 'lukasderasmo@gmail.com',
-            linkedin: 'linkedin.com/in/lukas-derasmo → Opens new tab',
-            github: 'github.com/LukasDerasmo → Opens new tab',
             phone: '(516) 778-4003'
         };
 
-        document.querySelectorAll('.contact-icon').forEach(icon => {
+        // Only add listeners to elements with data-contact attribute
+        document.querySelectorAll('[data-contact]').forEach(icon => {
             icon.addEventListener('click', (e) => {
                 const type = icon.dataset.contact;
-                if (type) {
-                    e.preventDefault(); // Prevent link navigation for popup
+                if (contacts[type]) {
                     const popup = document.getElementById('contact-popup');
                     popup.textContent = contacts[type];
                     popup.classList.add('active');
