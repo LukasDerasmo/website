@@ -60,35 +60,22 @@
             margin: 0 auto;
             gap: 80px;
             padding: 80px 40px 40px;
-            position: relative;
         }
 
-        /* VISUAL BARRIER */
-        .layout::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: linear-gradient(to bottom, 
-                transparent 0%, 
-                rgba(36,25,19,0.3) 20%, 
-                rgba(36,25,19,0.6) 50%, 
-                rgba(36,25,19,0.3) 80%, 
-                transparent 100%
-            );
-            transform: translateX(-50%);
-            z-index: 1;
+        /* LEFT SIDEBAR - STICKY */
+        .sidebar {
+            position: sticky;
+            top: 80px;
+            align-self: flex-start;
+            text-align: left;
         }
-
         /* LEFT SIDEBAR - STICKY + DARKER BACKGROUND */
         .sidebar {
             position: sticky;
             top: 80px;
             align-self: flex-start;
             text-align: left;
-            background: rgba(36,25,19,0.92);
+            background: rgba(36,25,19,0.3);
             padding: 40px;
             border-radius: 12px;
             backdrop-filter: blur(20px);
@@ -98,7 +85,6 @@
                 inset 0 0 20px rgba(227,209,200,0.1);
             z-index: 2;
         }
-
         .name {
             font-size: 3.5em;
             font-weight: 400;
@@ -108,16 +94,15 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             color: #020873;
-            text-shadow: 0 2px 4px rgba(2,8,115,0.3);
         }
 
         .tagline {
             font-size: 1.2em;
-            opacity: 0.95;
+            opacity: 0.85;
             margin-bottom: 60px;
             letter-spacing: 1px;
             text-transform: capitalize;
-            color: #e3d1c8;
+            color: #241913;
         }
 
         .nav {
@@ -127,10 +112,10 @@
         .nav a {
             display: block;
             font-size: 1.1em;
-            color: #e3d1c8;
+            color: #241913;
             text-decoration: none;
             padding: 12px 0;
-            opacity: 0.8;
+            opacity: 0.75;
             transition: all 0.3s ease;
             letter-spacing: 0.5px;
             text-transform: capitalize;
@@ -140,9 +125,9 @@
         .nav a.active {
             opacity: 1;
             text-shadow:
-                0 0 3px rgba(51,55,130,0.8),
-                0 0 8px rgba(51,55,130,0.5);
-            color: #e3d1c8;
+                0 0 3px rgba(51,55,130,0.6),
+                0 0 8px rgba(51,55,130,0.4);
+            color: #333782;
         }
 
         .contact {
@@ -152,7 +137,7 @@
             font-family: 'Spectral', serif;
             font-size: 1.1em;
             font-weight: 400;
-            color: #e3d1c8;
+            color: #241913;
             line-height: 1.8;
             text-decoration: none;
             letter-spacing: 0.6px;
@@ -161,23 +146,22 @@
         }
 
         .contact a {
-            color: #e3d1c8;
+            color: #241913;
             text-decoration: none;
             text-transform: lowercase;
         }
 
         .contact a:hover {
             text-decoration: underline;
-            color: #020873;
+            color: #333782;
             text-shadow:
-                0 0 1px rgba(51,55,130,0.9),
-                0 0 3px rgba(51,55,130,0.7);
+                0 0 1px rgba(51,55,130,0.8),
+                0 0 3px rgba(51,55,130,0.6);
         }
 
         .emoji {
             font-size: 20px;
             flex-shrink: 0;
-            filter: brightness(1.2) saturate(0.8);
         }
 
         /* RIGHT CONTENT */
@@ -220,11 +204,10 @@
             gap: 40px;
             margin-bottom: 60px;
             padding: 40px;
-            background: rgba(227,209,200,0.7);
-            border: 1px solid rgba(36,25,19,0.25);
-            border-radius: 12px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(36,25,19,0.1);
+            background: rgba(227,209,200,0.6);
+            border: 1px solid rgba(36,25,19,0.2);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
         }
 
         .project-info h3 {
@@ -235,7 +218,7 @@
         }
 
         .project-info p {
-            opacity: 0.9;
+            opacity: 0.85;
             line-height: 1.6;
             margin-bottom: 20px;
             color: #241913;
@@ -248,14 +231,14 @@
         }
 
         .tech span {
-            background: rgba(51,55,130,0.2);
+            background: rgba(51,55,130,0.15);
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.9em;
-            opacity: 0.9;
+            opacity: 0.85;
             text-transform: capitalize;
             color: #241913;
-            border: 1px solid rgba(3,8,115,0.3);
+            border: 1px solid rgba(3,8,115,0.2);
         }
 
         .copyright {
@@ -282,13 +265,9 @@
             }
             .sidebar {
                 position: static;
-                padding: 30px;
             }
             .name {
                 font-size: 2.5em;
-            }
-            .layout::before {
-                display: none; /* Hide barrier on mobile */
             }
         }
     </style>
