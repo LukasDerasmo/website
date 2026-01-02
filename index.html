@@ -7,7 +7,7 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;700&family=Raleway:wght@500&family=Lato:wght@400;500;700&family=Montserrat:wght@400&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -20,462 +20,365 @@
         }
 
         body {
-            background-color: #0F0F0F;
-            font-family: 'Roboto', sans-serif;
-            color: #BCABAE;
+            background: 
+                linear-gradient(to bottom, 
+                    #e3d1c8 0%, 
+                    #f2e8dc 100%
+                );
+            font-family: 'Spectral', serif;
+            color: #241913;
             min-height: 100vh;
             overflow-x: hidden;
-            line-height: 1.6;
         }
 
-        /* Fixed nav */
-        .navbar {
+        /* SCROLLING GRID */
+        body::before {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: #0F0F0F;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            box-shadow: 0 4px 20px rgba(45,46,46,0.5);
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(0deg, rgba(121,110,95,0.15) 0px, transparent 1px, transparent 2px, rgba(121,110,95,0.15) 3px),
+                repeating-linear-gradient(90deg, rgba(121,110,95,0.12) 0px, transparent 1px, transparent 2px, rgba(121,110,95,0.12) 3px);
+            pointer-events: none;
+            animation: gridScroll 4s linear infinite;
+            z-index: -1;
         }
 
-        .name {
-            font-family: 'Roboto', sans-serif;
-            font-size: 2.2em;
-            font-weight: 700;
-            color: #FBFBFB;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        @keyframes gridScroll {
+            0% { background-position: 0 0, 0 0; }
+            100% { background-position: 0 1080px, 0 1080px; }
         }
 
-        .contact-icons {
-            display: flex;
-            gap: 20px;
-        }
-
-        .contact-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #2D2E2E;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #FBFBFB;
-            font-size: 1.2em;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            cursor: pointer;
-        }
-
-        .contact-icon:hover {
-            background: #716969;
-            transform: scale(1.1);
-            border-color: #FBFBFB;
-        }
-
-        /* Contact popup */
-        .contact-popup {
-
-            position: fixed;
-            top: 100px;
-            right: 40px;
-            background: #2D2E2E;
-            color: #FBFBFB;
-            padding: 20px 24px;
-            border-radius: 8px;
-            box-shadow: 0 12px 40px rgba(15,15,15,0.8);
-            z-index: 150;
-            font-family: 'Roboto', sans-serif;
-            font-weight: 500;
-            min-width: 220px;
-        }
-
-        .contact-popup.active {
-            display: block;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        /* Catalog */
-        .catalog {
-            padding: 140px 40px 80px;
-            max-width: 1920px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-family: 'Roboto', sans-serif;
-            font-size: 4em;
-            font-weight: 400;
-            color: #BCABAE;
-            text-align: center;
-            margin-bottom: 80px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* Project grid */
-        .project-grid {
+        /* MAIN LAYOUT */
+        .layout {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 40px;
+            grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
             max-width: 1400px;
-            margin: 0 auto 120px;
+            margin: 0 auto;
+            gap: 80px;
+            padding: 80px 40px 40px;
         }
 
-        .project-card {
-            aspect-ratio: 1;
-            background: #FFFFFF;
+        }
+        /* LEFT SIDEBAR - STICKY + DARKER BACKGROUND */
+        .sidebar {
+            position: sticky;
+            top: 80px;
+            align-self: flex-start;
+            text-align: left;
+            background: rgba(36,25,19,0.3);
+            padding: 40px;
             border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            box-shadow: 0 12px 40px rgba(113,105,105,0.4);
-            border: 2px solid transparent;
-        }
-
-        .project-card:hover,
-        .project-card.clickable {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 24px 60px rgba(113,105,105,0.6);
-            border-color: #716969;
-        }
-
-        .project-thumb {
-            width: 100%;
-            height: 70%;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-
-        .project-thumb::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(15,15,15,0.15);
-            backdrop-filter: blur(0px);
-        }
-
-                .project-title {
-            position: absolute;
-                    
-            bottom: 48px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.95em;
-            font-weight: 500;
-            color: #BCABAE;
-            opacity: 0.9;
-        }
-
-        .project-code {
-            position: absolute;
-            
-            bottom: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: 'Roboto', sans-serif;
-            font-size: 1.1em;
-            font-weight: 700;
-            color: #FBFBFB !important;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(28,25,19,0.3);
+            box-shadow: 
+                8px 0 20px rgba(36,25,19,0.15),
+                inset 0 0 20px rgba(227,209,200,0.1);
             z-index: 2;
         }
-
-        /* Fullscreen detail */
-        .fullscreen-detail {
-
-            position: fixed;
-            inset: 0;
-            background: #0F0F0F;
-            z-index: 300;
-            padding: 80px 40px;
-            overflow-y: auto;
-            color: #FBFBFB;
-        }
-
-        .fullscreen-detail.active {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            gap: 40px;
-        }
-
-        .detail-content {
-            max-width: 900px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .detail-back {
-            position: absolute;
-            top: 30px;
-            left: 40px;
-            background: #2D2E2E;
-            color: #FBFBFB;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-family: 'Roboto', sans-serif;
-            font-weight: 500;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .detail-back:hover {
-            background: #716969;
-        }
-
-        .detail-title {
-            font-family: 'Roboto', sans-serif;
+        .name {
             font-size: 3.5em;
-            font-weight: 700;
-            margin-bottom: 24px;
-            letter-spacing: 2px;
-        }
-
-        .detail-desc {
-            font-size: 1.3em;
-            line-height: 1.7;
-            margin-bottom: 32px;
-            opacity: 0.95;
             font-weight: 400;
+            font-family: 'Spectral', serif;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #020873;
         }
 
-        .detail-tech {
+        .tagline {
+            font-size: 1.2em;
+            opacity: 0.85;
+            margin-bottom: 60px;
+            letter-spacing: 1px;
+            text-transform: capitalize;
+            color: #241913;
+        }
+
+        .nav {
+            margin-bottom: 60px;
+        }
+
+        .nav a {
+            display: block;
+            font-size: 1.1em;
+            color: #241913;
+            text-decoration: none;
+            padding: 12px 0;
+            opacity: 0.75;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            text-transform: capitalize;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            opacity: 1;
+            text-shadow:
+                0 0 3px rgba(51,55,130,0.6),
+                0 0 8px rgba(51,55,130,0.4);
+            color: #333782;
+        }
+
+        .contact {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Spectral', serif;
+            font-size: 1.1em;
+            font-weight: 400;
+            color: #241913;
+            line-height: 1.8;
+            text-decoration: none;
+            letter-spacing: 0.6px;
+            margin-bottom: 16px;
+            text-transform: none;
+        }
+
+        .contact a {
+            color: #241913;
+            text-decoration: none;
+            text-transform: lowercase;
+        }
+
+        .contact a:hover {
+            text-decoration: underline;
+            color: #333782;
+            text-shadow:
+                0 0 1px rgba(51,55,130,0.8),
+                0 0 3px rgba(51,55,130,0.6);
+        }
+
+        .emoji {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        /* RIGHT CONTENT */
+        .content {
+            padding-bottom: 25px;
+        }
+
+        .content section {
+            margin-bottom: 120px;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .content section:nth-child(1) { animation-delay: 0.1s; }
+        .content section:nth-child(2) { animation-delay: 0.2s; }
+        .content section:nth-child(3) { animation-delay: 0.3s; }
+        .content section:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            font-size: 3em;
+            font-weight: 400;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            text-transform: capitalize;
+            opacity: 0.95;
+            color: #241913;
+        }
+
+        /* PROJECT CARDS */
+        .project {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: rgba(227,209,200,0.6);
+            border: 1px solid rgba(36,25,19,0.2);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .project-info h3 {
+            font-size: 1.8em;
+            margin-bottom: 12px;
+            text-transform: capitalize;
+            color: #020873;
+        }
+
+        .project-info p {
+            opacity: 0.85;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #241913;
+        }
+
+        .tech {
             display: flex;
             flex-wrap: wrap;
-            gap: 16px;
-            justify-content: center;
+            gap: 12px;
         }
 
-        .detail-tech span {
-            background: #2D2E2E;
-            color: #FBFBFB;
-            padding: 10px 20px;
-            border-radius: 24px;
-            font-size: 1em;
-            font-weight: 500;
-            letter-spacing: 1px;
+        .tech span {
+            background: rgba(51,55,130,0.15);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            opacity: 0.85;
+            text-transform: capitalize;
+            color: #241913;
+            border: 1px solid rgba(3,8,115,0.2);
         }
 
         .copyright {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             text-align: center;
-            padding: 40px;
-            font-size: 0.9em;
-            color: #716969;
-            opacity: 0.8;
-            font-family: 'Roboto', sans-serif;
-            font-weight: 400;
+            font-size: 0.85em;
+            opacity: 0.6;
+            font-family: 'Spectral', serif;
+            width: 100%;
+            pointer-events: none;
+            z-index: 10;
+            color: #241913;
         }
 
-        /* Mobile */
+        /* MOBILE */
         @media (max-width: 768px) {
-            .navbar { padding: 16px 20px; flex-direction: column; gap: 16px; }
-            .name { font-size: 1.8em; }
-            .project-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; padding: 0 20px; }
-            .section-title { font-size: 2.5em; }
-            .fullscreen-detail { padding: 40px 20px; }
+            .layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 40px 20px;
+            }
+            .sidebar {
+                position: static;
+            }
+            .name {
+                font-size: 2.5em;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Fixed nav -->
-    <nav class="navbar">
-        <div class="name">LUKAS DERASMO</div>
-        <div class="contact-icons">
-            <!-- Email and Phone show popups, social links work directly -->
-            <div class="contact-icon" data-contact="email" title="Email">📧</div>
-            <a href="https://www.linkedin.com/in/lukas-derasmo" target="_blank" class="contact-icon" title="LinkedIn">💼</a>
-            <a href="https://github.com/LukasDerasmo/" target="_blank" class="contact-icon" title="GitHub">💻</a>
-            <a href="https://www.instagram.com/lukasderasmo/" target="_blank" class="contact-icon" title="Instagram">📸</a>
-            <div class="contact-icon" data-contact="phone" title="Phone">📞</div>
-        </div>
-    </nav>
+    <div class="layout">
+        <!-- LEFT SIDEBAR -->
+        <aside class="sidebar">
+            <div class="name">LUKAS DERASMO</div>
+            <div class="tagline">Student, Prospective Financial Crimes Analyst, Developer</div>
+            
+            <nav class="nav">
+                <a href="#about">About</a>
+                <a href="#experience">Education</a>
+                <a href="#projects">Projects</a>
+                <a href="#work">Work Experience</a>
+                <a href="#contact">Contact</a>
+            </nav>
 
-    <!-- Contact popup -->
-    <div id="contact-popup" class="contact-popup"></div>
+            <div class="contact">
+                <span class="emoji">📧</span><a href="mailto:lukasderasmo@gmail.com">lukasderasmo@gmail.com</a>
+            </div>
+            <div class="contact">
+                <span class="emoji">💼</span><a href="https://www.linkedin.com/in/lukas-derasmo" target="_blank">/in/lukas-derasmo</a>
+            </div>
+            <div class="contact">
+                <span class="emoji">💻</span><a href="https://github.com/LukasDerasmo/" target="_blank">@lukasderasmo</a>
+            </div>
+            <div class="contact">
+                <span class="emoji">📸</span><a href="https://www.instagram.com/lukasderasmo/" target="_blank">@lukasderasmo</a>
+            </div>
+            <div class="contact">
+                <span class="emoji">📞</span><a href="tel:+15167784003">(516) 778-4003</a>
+            </div>
+        </aside>
 
-    <main class="catalog">
-        <h2 class="section-title">Projects & Experience</h2>
-        <div class="project-grid">
-            <div class="project-card clickable" data-detail="ransomware">
-                <div class="project-thumb" style="background-image: url('ransom.png')"></div>
-                                    Ransomware Analysis</div>
-                PROJ-01</div>
-            </div>
-            <div class="project-card clickable" data-detail="trading">
-                <div class="project-thumb" style="background-image: url('trade.png')"></div>
-                                    Swing Trading</div>
-                PROJ-02</div>
-            </div>
-            <div class="project-card clickable" data-detail="binghamton">
-                <div class="project-thumb" style="background-image: url('bing.jpg')"></div>
-                                    Binghamton University</div>
-                EDU-02</div>
-            </div>
-            <div class="project-card clickable" data-detail="hs">
-                <div class="project-thumb" style="background-image: url('paul-d-schreiber-senior-high-school-port-washington-ny-3-schoolphoto.jpg')"></div>
-                    Paul D. Schreiber HS</div>
-                                EDU-01</div><
-                                                                                          
-                                                    /div>      <div class="project-card clickable" data-detail="pool">
-                <div class="project-thumb" style="background-image: url('lifeguard.jpg')"></div>
-                                    Manorhaven Park & Pool</div>
-                EXP-01</div>
-            </div>
-            <div class="project-card clickable" data-detail="crosscountry">
-                <div class="project-thumb" style="background-image: url('running.png')"></div>
-                                    Cross Country/Track</div>
-                ATH-01</div>
-            </div>
-        </div>
-    </main>
+        <!-- RIGHT CONTENT -->
+        <main class="content">
+            <section id="about">
+                <h2>About</h2>
+                <p>College freshman at Binghamton University pursuing financial crimes analysis and corporate intelligence. Building technical expertise in Python, SQL and associated software.</p>
+            </section>
 
-    <!-- Fullscreen details -->
-    <div id="detail-ransomware" class="fullscreen-detail">
-        <button class="detail-back">← Back</button>
-        <div class="detail-content">
-            <h3 class="detail-title">Ransomware Analysis</h3>
-            <p class="detail-desc">Developed fraud detection system analyzing 284,807 European credit card transactions using PCA-transformed features for GDPR compliance, identifying 492 fraudulent cases totaling $60,127 in exposure. Deployed on GitHub with PostgreSQL backend.</p>
-            <div class="detail-tech">
-                <span>SQL</span>
-                <span>Power BI</span>
-                <span>Anonymization</span>
-            </div>
-        </div>
-    </div>
+            <section id="experience">
+                <h2>Education</h2>
+                <div class="project">
+                    <div class="project-info">
+                        <h3>Binghamton University | C/O 2029</h3>
+                        <p>Studying business administration with business analytics concentration. Source Project researcher. Involvement in Marketing/Finance Societies. Scored to assist the club cross country team in qualifying for the national championship.</p>
+                        <div class="tech">
+                            <span>GPA: 4.0/4.0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project">
+                    <div class="project-info">
+                        <h3>Paul D. Schreiber HS | C/O 2025</h3>
+                        <p>Advanced Regents Diploma. Principal's Honor Roll Recipient all 8 semesters. AP Scholar with Distinction, National Merit Scholar Competition Commended. NYS Public High School Scholar Athlete Award (2x State Championship Qualifier for Cross Country, 1x for Track). 2x AATI National Italian Exam Bronze Medalist.</p>
+                        <div class="tech">
+                            <span>GPA: 4.52/4.50</span>
+                            <span>SAT: 1460/1600</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-    <div id="detail-trading" class="fullscreen-detail">
-        <button class="detail-back">← Back</button>
-        <div class="detail-content">
-            <h3 class="detail-title">Swing Trading</h3>
-            <p class="detail-desc">Created comprehensive database of 200+ stock charts analyzing breakout patterns, developed advanced scanner configurations to identify high-probability setups.</p>
-            <div class="detail-tech">
-                <span>Technical Analysis</span>
-                <span>Thinkorswim</span>
-                <span>Risk Management</span>
-            </div>
-        </div>
-    </div>
+            <section id="projects">
+                <h2>Projects</h2>
+                <div class="project">
+                    <div class="project-info">
+                        <h3>Ransomware Analysis</h3>
+                        <p>Developed fraud detection system analyzing 284,807 European credit card transactions using PCA-transformed features for GDPR compliance, identifying 492 fraudulent cases totaling $60,127 in exposure. Deployed on GitHub with PostgreSQL backend.</p>
+                        <div class="tech">
+                            <span>SQL</span>
+                            <span>Power BI</span>
+                            <span>Anonymization Protocols</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project">
+                    <div class="project-info">
+                        <h3>Swing Trading</h3>
+                        <p>Created comprehensive database of 200+ stock charts analyzing breakout patterns, developed advanced scanner configurations to identify high-probability setups, and built technical expertise in market trend analysis and trade execution.</p>
+                        <div class="tech">
+                            <span>Technical Analysis</span>
+                            <span>Thinkorswim</span>
+                            <span>Risk Management</span>
+                            <span>Notion</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-    <div id="detail-binghamton" class="fullscreen-detail">
-        <button class="detail-back">← Back</button>
-        <div class="detail-content">
-            <h3 class="detail-title">Binghamton University</h3>
-            <p class="detail-desc">College freshman studying business administration with business analytics concentration. GPA: 4.0/4.0. Source Project researcher.</p>
-            <div class="detail-tech">
-                <span>GPA: 4.0/4.0</span>
-            </div>
-        </div>
-    </div>
-
-    <div id="detail-hs" class="fullscreen-detail">
-        <button class="detail-back">← Back</button>
-        <div class="detail-content">
-            <h3 class="detail-title">Paul D. Schreiber HS</h3>
-            <p class="detail-desc">Advanced Regents Diploma. Principal's Honor Roll all 8 semesters. AP Scholar with Distinction. NYS Scholar Athlete (Cross Country/Track).</p>
-            <div class="detail-tech">
-                <span>GPA: 4.52/4.50</span>
-                <span>SAT: 1460/1600</span>
-            </div>
-        </div>
-    </div>
-
-    <div id="detail-pool" class="fullscreen-detail">
-        <button class="detail-back">← Back</button>
-        <div class="detail-content">
-            <h3 class="detail-title">Manorhaven Park & Pool</h3>
-            <p class="detail-desc">Lifeguard ensuring patron safety, first aid, shift scheduling, facility management. Surveyed 500+ patrons daily.</p>
-            <div class="detail-tech">
-                <span>Leadership</span>
-                <span>CPR/AED Certified</span>
-            </div>
-        </div>
-    </div>
-
-    <div id="detail-crosscountry" class="fullscreen-detail">
-        <button class="detail-back">← Back</button>
-        <div class="detail-content">
-            <h3 class="detail-title">Cross Country</h3>
-            <p class="detail-desc">3x state championship qualifier. Helped team qualify for nationals. NYS Scholar Athlete Award.</p>
-            <div class="detail-tech">
-                <span>Endurance</span>
-                <span>Team Leadership</span>
-            </div>
+            <section id="work">
+                <h2>Work Experience</h2>
+                <div class="project">
+                    <div class="project-info">
+                        <h3>Manorhaven Park & Pool</h3>
+                        <p>Ensured a safe swimming environment by monitoring patron behavior and enforcing facility rules. Used quick decision making in response to any emergency situation and provided first aid as needed. Surveyed over 500 patrons daily, providing aid when needed while maintaining open communication. Leadership role in designing shift schedules, ensuring up-to-date restocking of first aid supplies. </p>
+                        <div class="tech">
+                            <span>Leadership</span>
+                            <span>Organization</span>
+                            <span>CPR/AED Certification</span>
+                            <span>Red Cross/Nassau County Certification</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="contact">
+                <h2>Contact</h2>
+                <p>Ready to discuss career opportunities. See Email, Phone or LinkedIn.</p>
+            </section>
+        </main>
+        <div class="copyright">
+            © 2026 Lukas Derasmo. All rights reserved. Website programmed with HTML.
         </div>
     </div>
-
-    <footer class="copyright">
-        © 2026 Lukas Derasmo. All rights reserved.
-    </footer>
-
-    <script>
-        // Project cards clickable
-        document.querySelectorAll('.project-card').forEach(card => {
-            card.addEventListener('click', () => {
-                const detailId = card.dataset.detail;
-                if (detailId) {
-                    document.getElementById(`detail-${detailId}`).classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                }
-            });
-        });
-
-        // Back buttons
-        document.querySelectorAll('.detail-back').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.fullscreen-detail.active').forEach(detail => {
-                    detail.classList.remove('active');
-                });
-                document.body.style.overflow = '';
-            });
-        });
-
-        // Contact popups - ONLY for email and phone (not social links)
-        const contacts = {
-            email: 'lukasderasmo@gmail.com',
-            phone: '(516) 778-4003'
-        };
-
-        // Only add listeners to elements with data-contact attribute
-        document.querySelectorAll('[data-contact]').forEach(icon => {
-            icon.addEventListener('click', (e) => {
-                const type = icon.dataset.contact;
-                if (contacts[type]) {
-                    const popup = document.getElementById('contact-popup');
-                    popup.textContent = contacts[type];
-                    popup.classList.add('active');
-                    setTimeout(() => popup.classList.remove('active'), 3000);
-                }
-            });
-        });
-
-        // ESC close
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.fullscreen-detail.active').forEach(detail => {
-                    detail.classList.remove('active');
-                });
-                document.body.style.overflow = '';
-            }
-        });
-    </script>
 </body>
 </html>
