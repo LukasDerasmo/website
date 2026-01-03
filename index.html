@@ -10,6 +10,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;600&display=swap');
         }
 
         html, body {
@@ -91,6 +92,104 @@
             margin-top: 0.1em;
         }
 
+        .about-btn {
+        position: fixed;
+        top: 30px;
+        right: 40px;
+        padding: 8px 20px;
+        background: transparent;
+        color: #fff;
+        border: 2px solid #fff;
+        font-family: 'Inconsolata', monospace;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        z-index: 100;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        }
+
+        .about-btn:hover {
+        background: #fff;
+        color: #000;
+        }
+
+        .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.95);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+        display: flex;
+        opacity: 1;
+        }
+
+        .modal-content {
+            background: #111;
+            border: 2px solid #fff;
+            padding: 40px 50px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 28px;
+            cursor: pointer;
+            font-family: 'Inconsolata', monospace;
+            transition: color 0.2s ease;
+        }
+        
+        .modal-close:hover {
+            color: #999;
+        }
+        
+        .modal-content h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+        
+        .contact-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .contact-list li {
+            margin-bottom: 15px;
+            font-family: 'Inconsolata', monospace;
+            font-size: 16px;
+        }
+        
+        .contact-list a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .contact-list a:hover {
+            color: #22c55e;
+        }
+                
         .project { color: #22c55e; }
         .work { color: #3b82f6; }
         .hobby { color: #ef4444; }
@@ -104,11 +203,35 @@
     </style>
 </head>
 <body>
+    <button class="about-btn" id="aboutBtn">About</button>
     <div class="viewport">
         <div class="scroller" id="scroller"></div>
     </div>
-
+    
     <script>
+        const aboutBtn = document.getElementById('aboutBtn');
+const modalOverlay = document.getElementById('modalOverlay');
+const modalClose = document.getElementById('modalClose');
+
+aboutBtn.addEventListener('click', () => {
+    modalOverlay.classList.add('active');
+});
+
+modalClose.addEventListener('click', () => {
+    modalOverlay.classList.remove('active');
+});
+
+modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) {
+        modalOverlay.classList.remove('active');
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+        modalOverlay.classList.remove('active');
+    }
+});
         const scroller = document.getElementById('scroller');
         const cycleSize = 4;
         const numCycles = 5; // More cycles for smoother infinite scroll
@@ -214,5 +337,18 @@
             calculateHeights();
         });
     </script>
+    <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+        <button class="modal-close" id="modalClose">&times;</button>
+        <h2>Contact</h2>
+        <ul class="contact-list">
+            <li>📧 <a href="mailto:lukasderasmo@gmail.com">lukasderasmo@gmail.com</a></li>
+            <li>💼 <a href="https://www.linkedin.com/in/lukas-derasmo" target="_blank" rel="noopener">/in/lukas-derasmo</a></li>
+            <li>💻 <a href="https://github.com/LukasDerasmo/" target="_blank" rel="noopener">@lukasderasmo</a></li>
+            <li>📸 <a href="https://www.instagram.com/lukasderasmo/" target="_blank" rel="noopener">@lukasderasmo</a></li>
+            <li>📞 <a href="tel:+15167784003">(516) 778-4003</a></li>
+        </ul>
+    </div>
+</div>
 </body>
 </html>
