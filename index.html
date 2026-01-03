@@ -13,7 +13,7 @@
         }
 
         html {
-            scroll-snap-type: y mandatory;
+            scroll-snap-type: y proximity;
             scroll-behavior: smooth;
         }
 
@@ -24,11 +24,10 @@
             font-size: clamp(4rem, 12vw, 8rem);
             line-height: 0.9;
             overflow-x: hidden;
-            height: 100vh;
             position: relative;
         }
 
-        /* Scrolling background from attachments */
+        /* Scrolling background */
         body::before {
             content: '';
             position: fixed;
@@ -50,9 +49,9 @@
         }
 
         .list {
+            height: 500vh; /* Fixed height for 5 cycles */
             display: flex;
             flex-direction: column;
-            height: 100vh;
             scroll-snap-align: start;
         }
 
@@ -66,7 +65,7 @@
             padding-top: 10vh;
             cursor: pointer;
             transition: transform 0.3s ease;
-            position: relative;
+            scroll-snap-align: start;
         }
 
         .item:hover {
@@ -80,14 +79,9 @@
             margin-top: 0.1em;
         }
 
-        .project { color: #22c55e; } /* Green */
-        .work { color: #3b82f6; } /* Blue */
-        .hobby { color: #ef4444; } /* Red */
-
-        /* Faded clones for infinite depth */
-        .cloned {
-            opacity: 0.2;
-        }
+        .project { color: #22c55e; }
+        .work { color: #3b82f6; }
+        .hobby { color: #ef4444; }
 
         @media (max-width: 768px) {
             .item {
@@ -99,42 +93,72 @@
     </style>
 </head>
 <body>
-    <div class="list" id="projectList">
-        <div class="item project" data-type="project" onclick="openDetail('Ransomware Analysis')">
-            Ransomware Analysis
-            <span>(Project)</span>
-        </div>
-        <div class="item project" data-type="project" onclick="openDetail('Swing Trading')">
-            Swing Trading
-            <span>(Project)</span>
-        </div>
-        <div class="item work" data-type="work" onclick="openDetail('Manorhaven Park & Pool')">
-            Manorhaven Park & Pool
-            <span>(Work)</span>
-        </div>
-        <div class="item hobby" data-type="hobby" onclick="openDetail('Distance Running')">
-            Distance Running
-            <span>(Hobby)</span>
-        </div>
-    </div>
+    <div class="list" id="projectList"></div>
 
     <script>
         const list = document.getElementById('projectList');
-        const originalItems = [...list.children];
+        const itemHeight = window.innerHeight;
+        const cycleSize = 4; // Items per cycle
+        const cycleHeight = cycleSize * itemHeight;
+        const numCycles = 5; // Visible buffer
 
-        window.addEventListener('scroll', () => {
-            if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 200) {
-                originalItems.forEach((item, index) => {
-                    const clone = item.cloneNode(true);
-                    clone.classList.add('cloned');
-                    list.appendChild(clone);
-                });
+        const itemsData = [
+            { title: 'Ransomware Analysis', type: 'project', colorClass: 'project' },
+            { title: 'Swing Trading', type: 'project', colorClass: 'project' },
+            { title: 'Manorhaven Park & Pool', type: 'work', colorClass: 'work' },
+            { title: 'Distance Running', type: 'hobby', colorClass: 'hobby' }
+        ];
+
+        // Generate initial items (numCycles * cycleSize)
+        function generateCycle() {
+            return itemsData.map(data => {
+                const item = document.createElement('div');
+                item.className = `item ${data.colorClass}`;
+                item.dataset.type = data.type;
+                item.innerHTML = `${data.title}<span>(${data.type})</span>`;
+                item.onclick = () => openDetail(data.title);
+                return item;
+            });
+        }
+
+        for (let i = 0; i < numCycles; i++) {
+            generateCycle().forEach(item => list.appendChild(item));
+        }
+
+        // Seamless recycle loop
+        let isRecycling = false;
+        list.addEventListener('scroll', () => {
+            if (isRecycling) return;
+
+            const scrollTop = list.scrollTop;
+            if (scrollTop >= cycleHeight) {
+                isRecycling = true;
+                const resetScroll = scrollTop - cycleHeight;
+
+                // Delete top cycle
+                for (let i = 0; i < cycleSize; i++) {
+                    list.removeChild(list.firstChild);
+                }
+
+                // Regenerate and append new cycle at end
+                generateCycle().forEach(item => list.appendChild(item));
+
+                // Reset position
+                list.scrollTop = resetScroll;
+
+                requestAnimationFrame(() => { isRecycling = false; });
             }
         });
 
         function openDetail(title) {
-            alert(`Opening expanded window for ${title}\n\nImplement modal with full details next.`); // Stub for now
+            alert(`Expanded view for ${title}\n\nReady for modal implementation.`);
         }
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            // Regenerate on resize if needed
+            location.reload(); // Simple for demo; optimize later
+        });
     </script>
 </body>
 </html>
