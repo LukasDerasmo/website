@@ -55,8 +55,11 @@
             display: flex;
             flex-direction: column;
             will-change: transform;
-            transition: transform 0.1s ease-out;
             padding: 15px 0;
+        }
+
+        .scroller.smooth {
+            transition: transform 0.05s ease-out;
         }
 
         .item {
@@ -108,25 +111,16 @@
     <script>
         const scroller = document.getElementById('scroller');
         const cycleSize = 4;
-        const numCycles = 3;
+        const numCycles = 5; // More cycles for smoother infinite scroll
 
         const itemsData = [
             { title: 'Ransomware Analysis', type: 'Project', colorClass: 'project' },
             { title: 'Swing Trading', type: 'Project', colorClass: 'project' },
             { title: 'Manorhaven Park & Pool', type: 'Work', colorClass: 'work' },
-            { title: 'Distance Running', type: 'Hobby', colorClass: 'hobby' },
-            { title: 'Generic', type: 'Hobby', colorClass: 'hobby' },
-            { title: 'Generic', type: 'Hobby', colorClass: 'hobby' },
-            { title: 'Generic', type: 'Hobby', colorClass: 'hobby' },
-            { title: 'Generic', type: 'Hobby', colorClass: 'hobby' },
-            { title: 'Generic', type: 'Hobby', colorClass: 'hobby' },
-            { title: 'Generic', type: 'Hobby', colorClass: 'hobby' },
-            { title: 'Generic', type: 'Hobby', colorClass: 'hobby' },
-            { title: 'Generic', type: 'Hobby', colorClass: 'hobby' },
-            { title: 'Generic', type: 'Hobby', colorClass: 'hobby' }
+            { title: 'Distance Running', type: 'Hobby', colorClass: 'hobby' }
         ];
 
-        // Populate 3 cycles
+        // Populate cycles
         for (let cycle = 0; cycle < numCycles; cycle++) {
             itemsData.forEach(data => {
                 const item = document.createElement('div');
@@ -139,19 +133,25 @@
         }
 
         let currentY = 0;
-        let rafId = null;
-        let itemHeights = [];
+        let targetY = 0;
         let cycleHeight = 0;
+        let isCalculated = false;
 
         // Calculate actual heights after render
         function calculateHeights() {
-            itemHeights = [];
             const items = scroller.querySelectorAll('.item');
+            let height = 0;
             for (let i = 0; i < cycleSize; i++) {
                 const rect = items[i].getBoundingClientRect();
-                itemHeights.push(rect.height + 15); // Include margin
+                height += rect.height + 15; // Include margin
             }
-            cycleHeight = itemHeights.reduce((sum, h) => sum + h, 0);
+            cycleHeight = height;
+
+            // Start in the middle cycle to allow scrolling both directions
+            currentY = -cycleHeight * 2;
+            targetY = currentY;
+            scroller.style.transform = `translateY(${currentY}px)`;
+            isCalculated = true;
         }
 
         // Wait for fonts to load
@@ -162,39 +162,48 @@
         // Wheel for desktop/trackpad
         window.addEventListener('wheel', (e) => {
             e.preventDefault();
-            currentY -= e.deltaY * 0.8;
-            updateScroll();
+            if (!isCalculated) return;
+            targetY -= e.deltaY * 0.8;
         }, { passive: false });
 
         // Keyboard arrows/space
         window.addEventListener('keydown', (e) => {
+            if (!isCalculated) return;
             if (e.code === 'Space' || e.code === 'ArrowDown') {
                 e.preventDefault();
-                currentY -= 200;
-                updateScroll();
+                targetY -= 200;
             } else if (e.code === 'ArrowUp') {
                 e.preventDefault();
-                currentY += 200;
-                updateScroll();
+                targetY += 200;
             }
         });
 
-        function updateScroll() {
-            if (cycleHeight === 0) return;
-
-            // Seamless loop reset
-            if (currentY <= -cycleHeight) {
-                currentY += cycleHeight;
-            } else if (currentY > 0) {
-                currentY -= cycleHeight;
+        // Smooth animation loop
+        function animate() {
+            if (!isCalculated) {
+                requestAnimationFrame(animate);
+                return;
             }
 
-            if (rafId) cancelAnimationFrame(rafId);
-            rafId = requestAnimationFrame(() => {
-                scroller.style.transform = `translateY(${currentY}px)`;
-                rafId = null;
-            });
+            // Smooth interpolation
+            currentY += (targetY - currentY) * 0.15;
+
+            // Seamless loop reset (instant, no transition)
+            if (currentY <= -cycleHeight * 3) {
+                const offset = cycleHeight;
+                currentY += offset;
+                targetY += offset;
+            } else if (currentY > -cycleHeight) {
+                const offset = cycleHeight;
+                currentY -= offset;
+                targetY -= offset;
+            }
+
+            scroller.style.transform = `translateY(${currentY}px)`;
+            requestAnimationFrame(animate);
         }
+
+        animate();
 
         function openDetail(title) {
             alert(`Detail window for ${title}`);
