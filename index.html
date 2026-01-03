@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LUKAS DERASMO</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;600&display=swap" rel="stylesheet">
@@ -11,12 +11,14 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html, body {
             height: 100vh;
             overflow: hidden;
-            -webkit-overflow-scrolling: touch;
+            position: fixed;
+            width: 100%;
         }
 
         body {
@@ -51,7 +53,7 @@
             height: 100vh;
             overflow: hidden;
             position: relative;
-            touch-action: pan-y;
+            touch-action: none;
         }
 
         .scroller {
@@ -73,6 +75,8 @@
             transition: transform 0.3s ease, padding-left 0.3s ease;
             font-size: clamp(4rem, 10vw, 6rem);
             line-height: 0.8;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .item:hover {
@@ -119,7 +123,7 @@
             right: 40px;
             text-align: right;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(8rem, 10vw, 9rem);
+            font-size: clamp(2.5rem, 5vw, 4rem);
             line-height: 0.85;
             letter-spacing: 2px;
             z-index: 99;
@@ -221,8 +225,8 @@
         @media (max-width: 768px) {
             .item {
                 padding: 0 30px;
-                font-size: clamp(3rem, 15vw, 5rem);
-                margin-bottom: 20px;
+                font-size: clamp(2.5rem, 12vw, 4.5rem);
+                margin-bottom: 25px;
             }
 
             .about-btn {
@@ -336,8 +340,8 @@
 
         // Touch tracking
         let touchStartY = 0;
-        let touchLastY = 0;
-        let touchVelocity = 0;
+        let touchStartTime = 0;
+        let isDragging = false;
 
         // Calculate actual heights after render
         function calculateHeights() {
@@ -380,28 +384,47 @@
             }
         });
 
-        // Mobile: Touch events
+        // Mobile: Touch events with better handling
+        let lastTouchY = 0;
+        let touchVelocity = 0;
+        let lastTouchTime = 0;
+
         viewport.addEventListener('touchstart', (e) => {
             if (!isCalculated) return;
             touchStartY = e.touches[0].clientY;
-            touchLastY = touchStartY;
+            lastTouchY = touchStartY;
+            touchStartTime = Date.now();
+            lastTouchTime = touchStartTime;
+            isDragging = true;
             touchVelocity = 0;
-        }, { passive: true });
+        }, { passive: false });
 
         viewport.addEventListener('touchmove', (e) => {
-            if (!isCalculated) return;
-            const touchCurrentY = e.touches[0].clientY;
-            const deltaY = touchLastY - touchCurrentY;
-            targetY -= deltaY * 1.5;
-            touchVelocity = deltaY;
-            touchLastY = touchCurrentY;
-        }, { passive: true });
+            e.preventDefault();
+            if (!isCalculated || !isDragging) return;
 
-        viewport.addEventListener('touchend', () => {
+            const touchY = e.touches[0].clientY;
+            const deltaY = lastTouchY - touchY;
+            const currentTime = Date.now();
+            const deltaTime = currentTime - lastTouchTime;
+
+            if (deltaTime > 0) {
+                touchVelocity = deltaY / deltaTime;
+            }
+
+            targetY -= deltaY * 2;
+            lastTouchY = touchY;
+            lastTouchTime = currentTime;
+        }, { passive: false });
+
+        viewport.addEventListener('touchend', (e) => {
             if (!isCalculated) return;
-            // Add momentum
-            targetY -= touchVelocity * 10;
-        }, { passive: true });
+            isDragging = false;
+
+            // Apply momentum based on velocity
+            const momentum = touchVelocity * 500;
+            targetY -= momentum;
+        }, { passive: false });
 
         // Smooth animation loop
         function animate() {
@@ -431,7 +454,9 @@
         animate();
 
         function openDetail(title) {
-            alert(`Detail window for ${title}`);
+            if (!isDragging) {
+                alert(`Detail window for ${title}`);
+            }
         }
 
         // Resize recalc
