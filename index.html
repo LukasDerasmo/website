@@ -12,22 +12,19 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-snap-type: y proximity;
-            scroll-behavior: smooth;
+        html, body {
+            height: 100vh;
+            overflow: hidden;
         }
 
         body {
             background: #000;
             color: #fff;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(4rem, 12vw, 8rem);
-            line-height: 0.9;
-            overflow-x: hidden;
             position: relative;
         }
 
-        /* Scrolling background */
+        /* Independent scrolling background */
         body::before {
             content: '';
             position: fixed;
@@ -48,31 +45,43 @@
             100% { background-position: 0 200vh, 0 200vh; }
         }
 
-        .list {
-            height: 500vh; /* Fixed height for 5 cycles */
+        .viewport {
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .scroller {
             display: flex;
             flex-direction: column;
-            scroll-snap-align: start;
+            will-change: transform;
+            transition: transform 0.1s ease-out;
+            padding: 15px 0;
         }
 
         .item {
-            height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: flex-start;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
             text-align: left;
-            padding-left: clamp(80px, 10vw, 160px);
-            padding-top: 10vh;
+            padding: 0 40px;
+            margin-bottom: 15px;
             cursor: pointer;
-            transition: transform 0.3s ease;
-            scroll-snap-align: start;
+            transition: transform 0.3s ease, padding-left 0.3s ease;
+            font-size: clamp(4rem, 12vw, 8rem);
+            line-height: 0.9;
         }
 
         .item:hover {
-            transform: translateX(20px);
+            transform: translateX(10px);
         }
 
-        .item span {
+        .item-title {
+            display: block;
+        }
+
+        .item-type {
             font-size: 0.28em;
             opacity: 0.6;
             display: block;
@@ -85,79 +94,106 @@
 
         @media (max-width: 768px) {
             .item {
-                padding-left: clamp(40px, 8vw, 80px);
+                padding: 0 20px;
                 font-size: clamp(3rem, 20vw, 6rem);
-                padding-top: 15vh;
             }
         }
     </style>
 </head>
 <body>
-    <div class="list" id="projectList"></div>
+    <div class="viewport">
+        <div class="scroller" id="scroller"></div>
+    </div>
 
     <script>
-        const list = document.getElementById('projectList');
-        const itemHeight = window.innerHeight;
-        const cycleSize = 4; // Items per cycle
-        const cycleHeight = cycleSize * itemHeight;
-        const numCycles = 5; // Visible buffer
+        const scroller = document.getElementById('scroller');
+        const cycleSize = 4;
+        const numCycles = 3;
 
         const itemsData = [
-            { title: 'Ransomware Analysis', type: 'project', colorClass: 'project' },
-            { title: 'Swing Trading', type: 'project', colorClass: 'project' },
-            { title: 'Manorhaven Park & Pool', type: 'work', colorClass: 'work' },
-            { title: 'Distance Running', type: 'hobby', colorClass: 'hobby' }
+            { title: 'Ransomware Analysis', type: 'Project', colorClass: 'project' },
+            { title: 'Swing Trading', type: 'Project', colorClass: 'project' },
+            { title: 'Manorhaven Park & Pool', type: 'Work', colorClass: 'work' },
+            { title: 'Distance Running', type: 'Hobby', colorClass: 'hobby' }
         ];
 
-        // Generate initial items (numCycles * cycleSize)
-        function generateCycle() {
-            return itemsData.map(data => {
+        // Populate 3 cycles
+        for (let cycle = 0; cycle < numCycles; cycle++) {
+            itemsData.forEach(data => {
                 const item = document.createElement('div');
                 item.className = `item ${data.colorClass}`;
                 item.dataset.type = data.type;
-                item.innerHTML = `${data.title}<span>(${data.type})</span>`;
+                item.innerHTML = `<span class="item-title">${data.title}</span><span class="item-type">(${data.type})</span>`;
                 item.onclick = () => openDetail(data.title);
-                return item;
+                scroller.appendChild(item);
             });
         }
 
-        for (let i = 0; i < numCycles; i++) {
-            generateCycle().forEach(item => list.appendChild(item));
+        let currentY = 0;
+        let rafId = null;
+        let itemHeights = [];
+        let cycleHeight = 0;
+
+        // Calculate actual heights after render
+        function calculateHeights() {
+            itemHeights = [];
+            const items = scroller.querySelectorAll('.item');
+            for (let i = 0; i < cycleSize; i++) {
+                const rect = items[i].getBoundingClientRect();
+                itemHeights.push(rect.height + 15); // Include margin
+            }
+            cycleHeight = itemHeights.reduce((sum, h) => sum + h, 0);
         }
 
-        // Seamless recycle loop
-        let isRecycling = false;
-        list.addEventListener('scroll', () => {
-            if (isRecycling) return;
+        // Wait for fonts to load
+        document.fonts.ready.then(() => {
+            calculateHeights();
+        });
 
-            const scrollTop = list.scrollTop;
-            if (scrollTop >= cycleHeight) {
-                isRecycling = true;
-                const resetScroll = scrollTop - cycleHeight;
+        // Wheel for desktop/trackpad
+        window.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            currentY -= e.deltaY * 0.8;
+            updateScroll();
+        }, { passive: false });
 
-                // Delete top cycle
-                for (let i = 0; i < cycleSize; i++) {
-                    list.removeChild(list.firstChild);
-                }
-
-                // Regenerate and append new cycle at end
-                generateCycle().forEach(item => list.appendChild(item));
-
-                // Reset position
-                list.scrollTop = resetScroll;
-
-                requestAnimationFrame(() => { isRecycling = false; });
+        // Keyboard arrows/space
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' || e.code === 'ArrowDown') {
+                e.preventDefault();
+                currentY -= 200;
+                updateScroll();
+            } else if (e.code === 'ArrowUp') {
+                e.preventDefault();
+                currentY += 200;
+                updateScroll();
             }
         });
 
-        function openDetail(title) {
-            alert(`Expanded view for ${title}\n\nReady for modal implementation.`);
+        function updateScroll() {
+            if (cycleHeight === 0) return;
+
+            // Seamless loop reset
+            if (currentY <= -cycleHeight) {
+                currentY += cycleHeight;
+            } else if (currentY > 0) {
+                currentY -= cycleHeight;
+            }
+
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                scroller.style.transform = `translateY(${currentY}px)`;
+                rafId = null;
+            });
         }
 
-        // Resize handler
+        function openDetail(title) {
+            alert(`Detail window for ${title}`);
+        }
+
+        // Resize recalc
         window.addEventListener('resize', () => {
-            // Regenerate on resize if needed
-            location.reload(); // Simple for demo; optimize later
+            calculateHeights();
         });
     </script>
 </body>
