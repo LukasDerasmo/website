@@ -110,4 +110,31 @@
         </div>
         <div class="item work" data-type="work" onclick="openDetail('Manorhaven Park & Pool')">
             Manorhaven Park & Pool
-            <span>(Work)</s
+            <span>(Work)</span>
+        </div>
+        <div class="item hobby" data-type="hobby" onclick="openDetail('Distance Running')">
+            Distance Running
+            <span>(Hobby)</span>
+        </div>
+    </div>
+
+    <script>
+        const list = document.getElementById('projectList');
+        const originalItems = [...list.children];
+
+        window.addEventListener('scroll', () => {
+            if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 200) {
+                originalItems.forEach((item, index) => {
+                    const clone = item.cloneNode(true);
+                    clone.classList.add('cloned');
+                    list.appendChild(clone);
+                });
+            }
+        });
+
+        function openDetail(title) {
+            alert(`Opening expanded window for ${title}\n\nImplement modal with full details next.`); // Stub for now
+        }
+    </script>
+</body>
+</html>
