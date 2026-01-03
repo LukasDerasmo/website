@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        
         * {
             margin: 0;
             padding: 0;
@@ -44,6 +45,39 @@
         @keyframes gridScroll {
             0% { background-position: 0 0, 0 0; }
             100% { background-position: 0 200vh, 0 200vh; }
+        }
+
+                .name-display {
+            position: fixed;
+            top: 80px;
+            right: 40px;
+            text-align: right;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 0.85;
+            letter-spacing: 2px;
+            z-index: 99;
+            pointer-events: none;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .name-display .first-name {
+            display: block;
+            font-weight: 400;
+        }
+        
+        .name-display .last-name {
+            display: block;
+            font-weight: 400;
+        }
+        
+        @media (max-width: 768px) {
+            .name-display {
+                top: 60px;
+                right: 20px;
+                font-size: clamp(1.8rem, 8vw, 3rem);
+            }
         }
 
         .viewport {
@@ -231,6 +265,10 @@
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">&times;</button>
+            <div class="name-display">
+            <span class="first-name">LUKAS</span>
+            <span class="last-name">DERASMO</span>
+            </div>
             <h2>Contact</h2>
             <ul class="contact-list">
                 <li>📧 <a href="mailto:lukasderasmo@gmail.com">lukasderasmo@gmail.com</a></li>
