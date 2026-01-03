@@ -28,7 +28,7 @@
             position: relative;
         }
 
-        /* Scrolling background from attachments: animated repeating grid lines mimicking depth/texture */
+        /* Scrolling background from attachments */
         body::before {
             content: '';
             position: fixed;
@@ -60,44 +60,46 @@
             height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0 20px;
+            justify-content: flex-start;
+            text-align: left;
+            padding-left: clamp(80px, 10vw, 160px);
+            padding-top: 10vh;
             cursor: pointer;
             transition: transform 0.3s ease;
             position: relative;
         }
 
         .item:hover {
-            transform: scale(1.05);
+            transform: translateX(20px);
         }
 
         .item span {
-            font-size: 0.3em;
+            font-size: 0.28em;
             opacity: 0.6;
             display: block;
-            margin-top: -0.2em;
+            margin-top: 0.1em;
         }
 
         .project { color: #22c55e; } /* Green */
         .work { color: #3b82f6; } /* Blue */
         .hobby { color: #ef4444; } /* Red */
 
-        /* Infinite repeat: clone items on scroll */
+        /* Faded clones for infinite depth */
         .cloned {
-            opacity: 0.3;
+            opacity: 0.2;
         }
 
         @media (max-width: 768px) {
             .item {
+                padding-left: clamp(40px, 8vw, 80px);
                 font-size: clamp(3rem, 20vw, 6rem);
+                padding-top: 15vh;
             }
         }
     </style>
 </head>
 <body>
     <div class="list" id="projectList">
-        <!-- Initial items; JS will clone for infinite scroll -->
         <div class="item project" data-type="project" onclick="openDetail('Ransomware Analysis')">
             Ransomware Analysis
             <span>(Project)</span>
@@ -108,37 +110,4 @@
         </div>
         <div class="item work" data-type="work" onclick="openDetail('Manorhaven Park & Pool')">
             Manorhaven Park & Pool
-            <span>(Work)</span>
-        </div>
-        <div class="item hobby" data-type="hobby" onclick="openDetail('Distance Running')">
-            Distance Running
-            <span>(Hobby)</span>
-        </div>
-    </div>
-
-    <script>
-        // Infinite scroll: clone items when nearing end
-        const list = document.getElementById('projectList');
-        const originalItems = [...list.children];
-
-        let cloneCount = 0;
-        const maxClones = 20; // Prevent excess
-
-        window.addEventListener('scroll', () => {
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && cloneCount < maxClones) {
-                originalItems.forEach(item => {
-                    const clone = item.cloneNode(true);
-                    clone.classList.add('cloned');
-                    list.appendChild(clone);
-                });
-                cloneCount++;
-            }
-        });
-
-        // Placeholder for expanded details (modal/window) - implement next
-        function openDetail(title) {
-            alert(`Opening details for ${title}\n\nNext: Add modal with full description, tech stack, etc.`); // Stub
-        }
-    </script>
-</body>
-</html>
+            <span>(Work)</s
