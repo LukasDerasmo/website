@@ -1,1043 +1,533 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>LUKAS DERASMO</title>
-
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Spectral:wght@500;600&display=swap" rel="stylesheet">
-
     <style>
-
-        * {
-
-            margin: 0;
-
-            padding: 0;
-
-            box-sizing: border-box;
-
+        :root {
+            --bg: #f7f6f4;
+            --bg-card: #ffffff;
+            --border: rgba(24, 24, 27, 0.1);
+            --border-strong: rgba(24, 24, 27, 0.16);
+            --text: #0f0f0f;
+            --text-muted: #4a4a4f;
+            --accent: #CFAE70;
+            --accent-muted: #B49248;
+            --accent-soft: rgba(207, 174, 112, 0.14);
+            --shadow-sm: 0 1px 2px rgba(15, 15, 15, 0.04);
+            --shadow-md: 0 4px 16px rgba(15, 15, 15, 0.06);
+            --radius: 10px;
+            --radius-lg: 14px;
+            --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            --font-display: "Times New Roman", Times, serif;
+            --max-w: 1200px;
         }
 
-
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         html {
-
             scroll-behavior: smooth;
-
         }
-
-
 
         body {
-
-            --bg: #fafafa;
-
-            --bg-elevated: rgba(255, 255, 255, 0.72);
-
-            --border: rgba(24, 24, 27, 0.08);
-
-            --border-strong: rgba(24, 24, 27, 0.12);
-
-            --text: #0a0a0a;
-
-            --text-muted: #52525b;
-
-            --accent: #CFAE70;
-
-            --accent-muted: #B49248;
-
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-
-            --radius: 0.75rem;
-
-            --radius-lg: 1rem;
-
-            background: var(--bg);
-
-            background-image: linear-gradient(180deg, #f4f4f5 0%, #fafafa 45%, #f4f4f5 100%);
-
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-
-            font-size: 16px;
-
+            font-family: var(--font-sans);
+            font-size: 17px;
+            line-height: 1.6;
             color: var(--text);
-
+            background: var(--bg);
             min-height: 100vh;
-
-            overflow-x: hidden;
-
-            position: relative;
-
             -webkit-font-smoothing: antialiased;
-
         }
 
-
-
-        /* SVG grid (GridPattern-style) */
-
-        .site-grid-pattern {
-
+        body::before {
+            content: "";
             position: fixed;
-
             inset: 0;
-
-            z-index: 0;
-
             pointer-events: none;
-
-            overflow: hidden;
-
-            -webkit-mask-image: radial-gradient(ellipse 90% 75% at 50% 38%, #fff 0%, transparent 70%);
-
-            mask-image: radial-gradient(ellipse 90% 75% at 50% 38%, #fff 0%, transparent 70%);
-
+            z-index: 0;
+            opacity: 0.35;
+            background-image: radial-gradient(circle at center, rgba(15, 15, 15, 0.045) 1px, transparent 1px);
+            background-size: 22px 22px;
         }
 
-
-
-        .site-grid-pattern__svg {
-
-            position: absolute;
-
-            inset: -5% -5%;
-
-            width: 110%;
-
-            height: 110%;
-
-            transform: skewY(-12deg) scale(1.06);
-
-            transform-origin: center center;
-
-        }
-
-
-
-        .layout {
-
-            display: grid;
-
-            grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
-
-            max-width: 1280px;
-
-            margin: 0 auto;
-
-            gap: clamp(2rem, 5vw, 4.5rem);
-
-            padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 4vw, 2.5rem) 5rem;
-
+        .page {
             position: relative;
-
             z-index: 1;
-
-            align-items: start;
-
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: clamp(1.25rem, 4vw, 2.5rem) clamp(1rem, 3vw, 1.75rem) 3rem;
         }
 
-
-
-        .sidebar {
-
-            position: sticky;
-
-            top: clamp(1.5rem, 4vw, 2.5rem);
-
-            align-self: start;
-
-            text-align: left;
-
-            background: var(--bg-elevated);
-
-            padding: clamp(1.75rem, 4vw, 2.25rem);
-
-            border-radius: var(--radius-lg);
-
-            backdrop-filter: blur(16px);
-
-            -webkit-backdrop-filter: blur(16px);
-
-            border: 1px solid var(--border);
-
-            box-shadow: var(--shadow-md);
-
-            z-index: 2;
-
+        /* Header */
+        .site-header {
+            margin-bottom: clamp(1.25rem, 3vw, 2rem);
+            padding-bottom: clamp(1rem, 2.5vw, 1.5rem);
+            border-bottom: 1px solid var(--border);
         }
-
-
 
         .name {
-
-            font-size: clamp(2rem, 4.5vw, 2.75rem);
-
-            font-weight: 600;
-
-            font-family: 'Spectral', 'Inter', serif;
-
-            line-height: 1.15;
-
-            margin-bottom: 0.75rem;
-
-            letter-spacing: -0.03em;
-
-            text-transform: none;
-
+            font-family: var(--font-display);
+            font-size: clamp(2.25rem, 6vw, 3.25rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: 0.02em;
             color: var(--text);
-
+            margin-bottom: 0.5rem;
         }
-
-
 
         .tagline {
-
-            font-size: 0.95rem;
-
-            font-weight: 400;
-
-            line-height: 1.5;
-
-            margin-bottom: 2rem;
-
-            letter-spacing: -0.01em;
-
+            font-size: clamp(0.875rem, 2vw, 0.95rem);
             color: var(--text-muted);
-
+            line-height: 1.5;
+            max-width: 52rem;
+            margin-bottom: 1.25rem;
         }
-
-
 
         .nav {
-
-            margin-bottom: 2rem;
-
             display: flex;
-
-            flex-direction: column;
-
-            gap: 0.125rem;
-
+            flex-wrap: wrap;
+            gap: 0.35rem;
         }
-
-
 
         .nav a {
-
-            display: block;
-
-            font-size: 0.9rem;
-
-            font-weight: 500;
-
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
             color: var(--text-muted);
-
             text-decoration: none;
-
-            padding: 0.5rem 0.75rem;
-
-            margin-left: -0.75rem;
-
-            border-radius: calc(var(--radius) - 2px);
-
-            transition: color 0.15s ease, background 0.15s ease;
-
-            letter-spacing: -0.01em;
-
+            padding: 0.45rem 0.75rem;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
         }
-
-
 
         .nav a:hover,
-
         .nav a:focus-visible {
-
             color: var(--text);
-
             background: rgba(0, 0, 0, 0.04);
-
             outline: none;
-
         }
-
-
 
         .nav a.active {
-
-            color: var(--accent);
-
-            background: rgba(207, 174, 112, 0.12);
-
+            color: var(--accent-muted);
+            background: var(--accent-soft);
+            border-color: rgba(207, 174, 112, 0.35);
         }
 
-
-
-        .contact {
-
-            display: flex;
-
-            align-items: flex-start;
-
-            gap: 0.625rem;
-
-            font-size: 0.875rem;
-
-            font-weight: 400;
-
-            color: var(--text-muted);
-
-            line-height: 1.5;
-
-            margin-bottom: 0.875rem;
-
+        /* Bento grid */
+        .bento {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: clamp(0.75rem, 2vw, 1rem);
+            align-items: start;
         }
 
-
-
-        .contact a {
-
-            color: var(--text);
-
-            text-decoration: none;
-
-            border-bottom: 1px solid transparent;
-
-            transition: color 0.15s ease, border-color 0.15s ease;
-
-            word-break: break-word;
-
-        }
-
-
-
-        .contact a:hover {
-
-            color: var(--accent);
-
-            border-bottom-color: rgba(207, 174, 112, 0.45);
-
-        }
-
-
-
-        .emoji {
-
-            font-size: 1rem;
-
-            flex-shrink: 0;
-
-            line-height: 1.5;
-
-            opacity: 0.85;
-
-        }
-
-
-
-        .content {
-
-            padding-bottom: 2rem;
-
-            min-width: 0;
-
-        }
-
-
-
-        .content section {
-
-            margin-bottom: clamp(3rem, 8vw, 5rem);
-
+        .bento__tile {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: clamp(1.15rem, 2.5vw, 1.5rem);
+            box-shadow: var(--shadow-sm);
+            scroll-margin-top: 1rem;
             opacity: 0;
-
-            transform: translateY(24px);
-
-            animation: fadeInUp 0.7s ease forwards;
-
+            transform: translateY(12px);
+            animation: tileIn 0.55s ease forwards;
         }
 
+        .bento__tile:hover {
+            border-color: var(--border-strong);
+            box-shadow: var(--shadow-md);
+        }
 
-
-        .content section:nth-child(1) { animation-delay: 0.05s; }
-
-        .content section:nth-child(2) { animation-delay: 0.1s; }
-
-        .content section:nth-child(3) { animation-delay: 0.15s; }
-
-        .content section:nth-child(4) { animation-delay: 0.2s; }
-
-        .content section:nth-child(5) { animation-delay: 0.25s; }
-
-        .content section:nth-child(6) { animation-delay: 0.3s; }
-
-
-
-        @keyframes fadeInUp {
-
+        @keyframes tileIn {
             to {
-
                 opacity: 1;
-
                 transform: translateY(0);
-
             }
-
         }
 
+        .bento__tile:nth-child(1) { animation-delay: 0.04s; }
+        .bento__tile:nth-child(2) { animation-delay: 0.08s; }
+        .bento__tile:nth-child(3) { animation-delay: 0.12s; }
+        .bento__tile:nth-child(4) { animation-delay: 0.16s; }
+        .bento__tile:nth-child(5) { animation-delay: 0.2s; }
+        .bento__tile:nth-child(6) { animation-delay: 0.24s; }
 
+        @media (prefers-reduced-motion: reduce) {
+            .bento__tile {
+                opacity: 1;
+                transform: none;
+                animation: none;
+            }
+        }
+
+        .bento__tile--about { grid-column: span 12; }
+        .bento__tile--education { grid-column: span 6; }
+        .bento__tile--research { grid-column: span 6; }
+        .bento__tile--work { grid-column: span 7; }
+        .bento__tile--skills { grid-column: span 5; }
+        .bento__tile--contact { grid-column: span 12; }
 
         h2 {
-
-            font-size: clamp(1.75rem, 3.5vw, 2.25rem);
-
-            font-weight: 600;
-
-            margin-bottom: 1.25rem;
-
-            letter-spacing: -0.035em;
-
-            color: var(--text);
-
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent-muted);
+            margin-bottom: 1rem;
         }
-
-
 
         .lead {
-
             font-size: 1.0625rem;
-
             line-height: 1.65;
-
             color: var(--text-muted);
-
-            max-width: 52ch;
-
         }
 
-
-
-        .project {
-
-            margin-bottom: 1.25rem;
-
-            padding: clamp(1.35rem, 3vw, 1.75rem);
-
-            background: var(--bg-elevated);
-
-            border: 1px solid var(--border);
-
-            border-radius: var(--radius-lg);
-
-            backdrop-filter: blur(12px);
-
-            -webkit-backdrop-filter: blur(12px);
-
-            box-shadow: var(--shadow-sm);
-
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-
+        .card {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
         }
 
-
-
-        .project:hover {
-
-            border-color: var(--border-strong);
-
-            box-shadow: var(--shadow-md);
-
+        .card:first-of-type {
+            padding-top: 0;
         }
 
-
-
-        .project:last-child {
-
-            margin-bottom: 0;
-
+        .card:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
         }
 
+        .card + .card {
+            margin-top: 0;
+        }
 
-
-        .project-info h3 {
-
-            font-size: 1.125rem;
-
-            font-weight: 600;
-
-            margin-bottom: 0.5rem;
-
-            letter-spacing: -0.025em;
-
+        .card h3 {
+            font-size: 1rem;
+            font-weight: 700;
             color: var(--text);
-
+            margin-bottom: 0.4rem;
+            line-height: 1.35;
         }
 
-
-
-        .project-info p {
-
-            line-height: 1.65;
-
-            margin-bottom: 1rem;
-
-            color: var(--text-muted);
-
+        .card p {
             font-size: 0.9375rem;
-
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
         }
 
-
+        .card p:last-child {
+            margin-bottom: 0;
+        }
 
         .tech {
-
             display: flex;
-
             flex-wrap: wrap;
-
-            gap: 0.5rem;
-
+            gap: 0.4rem;
         }
-
-
 
         .tech span {
-
-            background: rgba(244, 244, 245, 0.9);
-
-            padding: 0.25rem 0.65rem;
-
-            border-radius: 9999px;
-
-            font-size: 0.75rem;
-
-            font-weight: 500;
-
-            letter-spacing: -0.01em;
-
+            font-size: 0.6875rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            padding: 0.28rem 0.6rem;
+            border-radius: 999px;
             color: var(--text-muted);
-
-            border: 1px solid var(--border);
-
+            background: var(--accent-soft);
+            border: 1px solid rgba(207, 174, 112, 0.4);
         }
 
+        .skills-block + .skills-block {
+            margin-top: 1.25rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border);
+        }
 
+        .skills-block h3 {
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-bottom: 0.65rem;
+            color: var(--text);
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+            margin-top: 1rem;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .contact-row a {
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: color 0.15s ease, border-color 0.15s ease;
+            word-break: break-word;
+        }
+
+        .contact-row a:hover {
+            color: var(--accent-muted);
+            border-bottom-color: rgba(180, 146, 72, 0.5);
+        }
+
+        .emoji {
+            flex-shrink: 0;
+            line-height: 1.5;
+        }
 
         .copyright {
-
             grid-column: 1 / -1;
-
             text-align: center;
-
             font-size: 0.75rem;
-
-            padding-top: 2rem;
-
-            margin-top: 1rem;
-
             color: var(--text-muted);
-
-            opacity: 0.85;
-
-            letter-spacing: -0.01em;
-
+            padding-top: 1.5rem;
+            margin-top: 0.5rem;
+            opacity: 1;
+            transform: none;
+            animation: none;
+            background: transparent;
+            border: none;
+            box-shadow: none;
         }
 
-
-
-        @media (max-width: 768px) {
-
-            .layout {
-
-                grid-template-columns: 1fr;
-
-                gap: 2rem;
-
-                padding-bottom: 3rem;
-
+        /* Mobile: 2-column mini bento */
+        @media (max-width: 900px) {
+            .bento {
+                grid-template-columns: repeat(2, 1fr);
             }
 
-
-
-            .sidebar {
-
-                position: static;
-
+            .bento__tile--about,
+            .bento__tile--education,
+            .bento__tile--research,
+            .bento__tile--work {
+                grid-column: span 2;
             }
 
-
-
-            .name {
-
-                font-size: 1.875rem;
-
+            .bento__tile--skills,
+            .bento__tile--contact {
+                grid-column: span 1;
             }
 
+            .copyright {
+                grid-column: span 2;
+            }
         }
 
+        @media (max-width: 480px) {
+            .nav a {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.55rem;
+            }
+
+            .bento__tile {
+                padding: 1rem;
+            }
+        }
     </style>
-
 </head>
-
 <body>
-
-    <div class="site-grid-pattern" aria-hidden="true">
-
-        <svg class="site-grid-pattern__svg" xmlns="http://www.w3.org/2000/svg">
-
-            <defs>
-
-                <pattern id="site-grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse" x="-1" y="-1">
-
-                    <path d="M.5 40V.5H40" fill="none" stroke="rgba(113,113,122,0.22)" />
-
-                </pattern>
-
-            </defs>
-
-            <rect width="100%" height="100%" fill="url(#site-grid-pattern)" stroke="none" />
-
-            <g fill="rgba(113,113,122,0.14)" stroke="none" transform="translate(-1,-1)">
-
-                <rect x="161" y="161" width="39" height="39" />
-
-                <rect x="201" y="41" width="39" height="39" />
-
-                <rect x="321" y="81" width="39" height="39" />
-
-                <rect x="201" y="121" width="39" height="39" />
-
-                <rect x="201" y="201" width="39" height="39" />
-
-                <rect x="401" y="401" width="39" height="39" />
-
-                <rect x="481" y="601" width="39" height="39" />
-
-                <rect x="601" y="401" width="39" height="39" />
-
-                <rect x="401" y="601" width="39" height="39" />
-
-            </g>
-
-        </svg>
-
-    </div>
-
-    <div class="layout">
-
-        <!-- LEFT SIDEBAR -->
-
-        <aside class="sidebar">
-
-            <div class="name">LUKAS DERASMO</div>
-
-            <div class="tagline">Vanderbilt University, Economics · Global financial crimes, sanctions, AML &amp; blockchain forensics · NYC Metro Area</div>
-
-            
-
-            <nav class="nav">
-
+    <div class="page">
+        <header class="site-header">
+            <h1 class="name">LUKAS DERASMO</h1>
+            <p class="tagline">Vanderbilt University, Economics · Global financial crimes, sanctions, AML &amp; blockchain forensics · NYC Metro Area</p>
+            <nav class="nav" aria-label="Primary">
                 <a href="#about">About</a>
-
                 <a href="#education">Education</a>
-
                 <a href="#research">Research</a>
-
                 <a href="#work">Experience</a>
-
                 <a href="#skills">Skills</a>
-
                 <a href="#contact">Contact</a>
-
             </nav>
+        </header>
 
-
-
-            <div class="contact">
-
-                <span class="emoji">📧</span><a href="mailto:lukasderasmo@gmail.com">lukasderasmo@gmail.com</a>
-
-            </div>
-
-            <div class="contact">
-
-                <span class="emoji">💼</span><a href="https://www.linkedin.com/in/lukas-derasmo" target="_blank">/in/lukas-derasmo</a>
-
-            </div>
-
-            <div class="contact">
-
-                <span class="emoji">💻</span><a href="https://github.com/LukasDerasmo/" target="_blank">@lukasderasmo</a>
-
-            </div>
-
-            <div class="contact">
-
-                <span class="emoji">📸</span><a href="https://www.instagram.com/lukasderasmo/" target="_blank">@lukasderasmo</a>
-
-            </div>
-
-            <div class="contact">
-
-                <span class="emoji">📞</span><a href="tel:+15167784003">(516) 778-4003</a>
-
-            </div>
-
-        </aside>
-
-
-
-        <!-- RIGHT CONTENT -->
-
-        <main class="content">
-
-            <section id="about">
-
+        <main class="bento">
+            <section id="about" class="bento__tile bento__tile--about">
                 <h2>About</h2>
-
-                <p class="lead">Incoming sophomore transfer Economics student at Vanderbilt University. My interests sit at the intersection of finance, international relations, and emerging technology—especially how illicit actors exploit financial systems and digital assets. I am building skills in SQL, investigative research, blockchain analysis, and financial crime compliance, and I am interested in internships across AML, sanctions, crypto investigations, risk, and intelligence. Outside of work, I enjoy long-distance running and hip-hop music.</p>
-
+                <p class="lead">Incoming sophomore transfer Economics student at Vanderbilt University. My interests sit at the intersection of finance, international relations, and emerging technology, especially how illicit actors exploit financial systems and digital assets. I am building skills in SQL, investigative research, blockchain analysis, and financial crime compliance, and I am interested in internships across AML, sanctions, crypto investigations, risk, and intelligence. Outside of work, I enjoy long-distance running and hip-hop music.</p>
             </section>
 
-
-
-            <section id="education">
-
+            <section id="education" class="bento__tile bento__tile--education">
                 <h2>Education</h2>
-
-                <div class="project">
-
-                    <div class="project-info">
-
-                        <h3>Vanderbilt University</h3>
-
-                        <p>Bachelor of Science, Economics · May 2026 – May 2029</p>
-
-                        <div class="tech">
-
-                            <span>Incoming transfer</span>
-
-                            <span>Financial crimes &amp; sanctions</span>
-
-                        </div>
-
+                <article class="card">
+                    <h3>Vanderbilt University</h3>
+                    <p>Bachelor of Science, Economics · May 2026 – May 2029</p>
+                    <div class="tech">
+                        <span>Incoming transfer</span>
+                        <span>Financial crimes &amp; sanctions</span>
                     </div>
-
-                </div>
-
-                <div class="project">
-
-                    <div class="project-info">
-
-                        <h3>Binghamton University</h3>
-
-                        <p>Bachelor of Business Administration, Business Administration · August 2025 – May 2026. Source Project researcher; Finance Society and BEAM (Business, Entertainment and Marketing). Club running.</p>
-
-                        <div class="tech">
-
-                            <span>GPA: 4.0</span>
-
-                            <span>Dean's List</span>
-
-                        </div>
-
+                </article>
+                <article class="card">
+                    <h3>Binghamton University</h3>
+                    <p>Bachelor of Business Administration, Business Administration · August 2025 – May 2026. Source Project researcher; Finance Society and BEAM (Business, Entertainment and Marketing). Club running.</p>
+                    <div class="tech">
+                        <span>GPA: 4.0</span>
+                        <span>Dean's List</span>
                     </div>
-
-                </div>
-
-                <div class="project">
-
-                    <div class="project-info">
-
-                        <h3>Paul D. Schreiber Senior High School</h3>
-
-                        <p>September 2021 – June 2025. Advanced Regents Diploma. Principal's Honor Roll all 8 semesters. AP Scholar with Distinction; National Merit Commended Scholar. NYS Public High School Scholar Athlete Award (2× state championship qualifier, cross country; 1× track). 2× AATI National Italian Exam bronze medalist.</p>
-
-                        <div class="tech">
-
-                            <span>GPA: 4.52/4.50</span>
-
-                            <span>SAT: 1460</span>
-
-                        </div>
-
+                </article>
+                <article class="card">
+                    <h3>Paul D. Schreiber Senior High School</h3>
+                    <p>September 2021 – June 2025. Advanced Regents Diploma. Principal's Honor Roll all 8 semesters. AP Scholar with Distinction; National Merit Commended Scholar. NYS Public High School Scholar Athlete Award (2× state championship qualifier, cross country; 1× track). 2× AATI National Italian Exam bronze medalist.</p>
+                    <div class="tech">
+                        <span>GPA: 4.52/4.50</span>
+                        <span>SAT: 1460</span>
                     </div>
-
-                </div>
-
+                </article>
             </section>
 
-
-
-            <section id="research">
-
+            <section id="research" class="bento__tile bento__tile--research">
                 <h2>Research</h2>
-
-                <div class="project">
-
-                    <div class="project-info">
-
-                        <h3>Source Project · Binghamton University</h3>
-
-                        <p>August 2025 – May 2026. Analyzed Sino-Taiwanese and Sino-Hong Kong relations, leveraging comparative case study methodology to establish a framework for democratic resistance against cyber and financial pressure from Beijing. Developed resilience frameworks for democracies, leveraging investigative synthesis of the global regulatory landscape and sanctions-related activity to analyze underlying data for systemic stability. Presented findings at Binghamton University Research Days poster session.</p>
-
-                        <div class="tech">
-
-                            <span>Qualitative Research</span>
-
-                            <span>Sanctions</span>
-
-                            <span>Project Management</span>
-
-                        </div>
-
+                <article class="card">
+                    <h3>Source Project · Binghamton University</h3>
+                    <p>August 2025 – May 2026. Analyzed Sino-Taiwanese and Sino-Hong Kong relations, leveraging comparative case study methodology to establish a framework for democratic resistance against cyber and financial pressure from Beijing. Developed resilience frameworks for democracies, leveraging investigative synthesis of the global regulatory landscape and sanctions-related activity to analyze underlying data for systemic stability. Presented findings at Binghamton University Research Days poster session.</p>
+                    <div class="tech">
+                        <span>Qualitative Research</span>
+                        <span>Sanctions</span>
+                        <span>Project Management</span>
                     </div>
-
-                </div>
-
-
-                <div class="project">
-
-                    <div class="project-info">
-
-                        <h3>Credit Card Fraud Detection</h3>
-
-                        <p>Developed fraud detection system analyzing 284,807 European credit card transactions using PCA-transformed features for GDPR compliance, identifying 492 fraudulent cases totaling $60,127 in exposure. Deployed on GitHub with PostgreSQL backend.</p>
-
-                        <div class="tech">
-
-                            <span>SQL</span>
-
-                            <span>Power BI</span>
-
-                            <span>Anonymization Protocols</span>
-
-                        </div>
-
+                </article>
+                <article class="card">
+                    <h3>Credit Card Fraud Detection</h3>
+                    <p>Developed fraud detection system analyzing 284,807 European credit card transactions using PCA-transformed features for GDPR compliance, identifying 492 fraudulent cases totaling $60,127 in exposure. Deployed on GitHub with PostgreSQL backend.</p>
+                    <div class="tech">
+                        <span>SQL</span>
+                        <span>Power BI</span>
+                        <span>Anonymization Protocols</span>
                     </div>
-
-                </div>
-
-
+                </article>
             </section>
 
-
-            <section id="work">
-
+            <section id="work" class="bento__tile bento__tile--work">
                 <h2>Experience</h2>
-
-                <div class="project">
-
-                    <div class="project-info">
-
-                        <h3>Lifeguard · Town of North Hempstead, New York</h3>
-
-                        <p>August 2023 – Present. Ensured a safe swimming environment through active risk assessment and enforcing patrons' compliance with facility rules. Used quick decision making during incident response and provided first aid as needed, utilizing CPR and rescue techniques from rigorous training (CPR/AED for the Professional Rescuer, Nassau County Grade IB Lifeguarding Certification). Maintained open communication with team members on weather conditions, safety inspections, and pool operations.</p>
-
-                        <div class="tech">
-
-                            <span>CPR/AED</span>
-
-                            <span>Nassau County Grade IB</span>
-
-                            <span>First aid</span>
-
-                        </div>
-
+                <article class="card">
+                    <h3>Lifeguard · Town of North Hempstead, New York</h3>
+                    <p>August 2023 – Present. Ensured a safe swimming environment through active risk assessment and enforcing patrons' compliance with facility rules. Used quick decision making during incident response and provided first aid as needed, utilizing CPR and rescue techniques from rigorous training (CPR/AED for the Professional Rescuer, Nassau County Grade IB Lifeguarding Certification). Maintained open communication with team members on weather conditions, safety inspections, and pool operations.</p>
+                    <div class="tech">
+                        <span>CPR/AED</span>
+                        <span>Nassau County Grade IB</span>
+                        <span>First aid</span>
                     </div>
-
-                </div>
-
-
-                <div class="project">
-
-                    <div class="project-info">
-
-                        <h3>Lifeguard · Pierce Country Day School/Camp</h3>
-
-                        <p>July 2023 – August 2023. Conducted swim lessons for young campers, focusing on skill development, safety awareness, and building confidence in the water. Assessed individual swimming abilities to tailor lessons and ensure appropriate skill progression. Collaborated with lead counselors on camper supervision during bus transit to and from camp.</p>
-
-                        <div class="tech">
-
-                            <span>Swim instruction</span>
-
-                            <span>Youth supervision</span>
-
-                        </div>
-
+                </article>
+                <article class="card">
+                    <h3>Lifeguard · Pierce Country Day School/Camp</h3>
+                    <p>July 2023 – August 2023. Conducted swim lessons for young campers, focusing on skill development, safety awareness, and building confidence in the water. Assessed individual swimming abilities to tailor lessons and ensure appropriate skill progression. Collaborated with lead counselors on camper supervision during bus transit to and from camp.</p>
+                    <div class="tech">
+                        <span>Swim instruction</span>
+                        <span>Youth supervision</span>
                     </div>
-
-                </div>
-
-
-                <div class="project">
-
-                    <div class="project-info">
-
-                        <h3>Student Staff · Port Washington UFSD</h3>
-
-                        <p>June 2022 – August 2022. Assisted custodial staff at Carrie Palmer Weber Middle School—cleaning and moving furniture, preparing the school for the academic year, and performing deep cleaning tasks including sweeping, mopping, and sanitizing classrooms and common areas.</p>
-
-                        <div class="tech">
-
-                            <span>Custodial</span>
-
-                            <span>Facilities</span>
-
-                        </div>
-
+                </article>
+                <article class="card">
+                    <h3>Student Staff · Port Washington UFSD</h3>
+                    <p>June 2022 – August 2022. Assisted custodial staff at Carrie Palmer Weber Middle School, cleaning and moving furniture, preparing the school for the academic year, and performing deep cleaning tasks including sweeping, mopping, and sanitizing classrooms and common areas.</p>
+                    <div class="tech">
+                        <span>Custodial</span>
+                        <span>Facilities</span>
                     </div>
-
-                </div>
-
-
+                </article>
             </section>
 
-
-            <section id="skills">
-
+            <section id="skills" class="bento__tile bento__tile--skills">
                 <h2>Skills &amp; Certifications</h2>
-
-                <div class="project">
-
-                    <div class="project-info">
-
-                        <h3>Top skills</h3>
-
-                        <div class="tech">
-
-                            <span>Qualitative Research</span>
-
-                            <span>Project Management</span>
-
-                            <span>SQL</span>
-
-                            <span>Investigative research</span>
-
-                            <span>Blockchain analysis</span>
-
-                            <span>Financial crime compliance</span>
-
-                        </div>
-
+                <div class="skills-block">
+                    <h3>Top skills</h3>
+                    <div class="tech">
+                        <span>Qualitative Research</span>
+                        <span>Project Management</span>
+                        <span>SQL</span>
+                        <span>Investigative research</span>
+                        <span>Blockchain analysis</span>
+                        <span>Financial crime compliance</span>
                     </div>
-
                 </div>
-
-
-                <div class="project">
-
-                    <div class="project-info">
-
-                        <h3>Certifications</h3>
-
-                        <div class="tech">
-
-                            <span>Seizure First Aid (Epilepsy Foundation, Jul 2025)</span>
-
-                            <span>Narcan (American Heart Association, Apr 2025)</span>
-
-                            <span>CPR/AED for Professional Rescuers (American Red Cross, Jul 2023)</span>
-
-                        </div>
-
+                <div class="skills-block">
+                    <h3>Certifications</h3>
+                    <div class="tech">
+                        <span>Seizure First Aid (Epilepsy Foundation, Jul 2025)</span>
+                        <span>Narcan (American Heart Association, Apr 2025)</span>
+                        <span>CPR/AED for Professional Rescuers (American Red Cross, Jul 2023)</span>
                     </div>
-
                 </div>
-
-
             </section>
 
-
-<section id="contact">
-
+            <section id="contact" class="bento__tile bento__tile--contact">
                 <h2>Contact</h2>
-
                 <p class="lead">Open to internships and opportunities in AML, sanctions, crypto investigations, risk, and intelligence. Reach out via email, phone, or LinkedIn.</p>
-
+                <div class="contact-links">
+                    <div class="contact-row">
+                        <span class="emoji" aria-hidden="true">📧</span>
+                        <a href="mailto:lukasderasmo@gmail.com">lukasderasmo@gmail.com</a>
+                    </div>
+                    <div class="contact-row">
+                        <span class="emoji" aria-hidden="true">💼</span>
+                        <a href="https://www.linkedin.com/in/lukas-derasmo" target="_blank" rel="noopener noreferrer">/in/lukas-derasmo</a>
+                    </div>
+                    <div class="contact-row">
+                        <span class="emoji" aria-hidden="true">💻</span>
+                        <a href="https://github.com/LukasDerasmo/" target="_blank" rel="noopener noreferrer">@lukasderasmo</a>
+                    </div>
+                    <div class="contact-row">
+                        <span class="emoji" aria-hidden="true">📸</span>
+                        <a href="https://www.instagram.com/lukasderasmo/" target="_blank" rel="noopener noreferrer">@lukasderasmo</a>
+                    </div>
+                    <div class="contact-row">
+                        <span class="emoji" aria-hidden="true">📞</span>
+                        <a href="tel:+15167784003">(516) 778-4003</a>
+                    </div>
+                </div>
             </section>
 
+            <p class="copyright">© 2026 Lukas Derasmo. All rights reserved.</p>
         </main>
-
-        <div class="copyright">
-
-            © 2026 Lukas Derasmo. All rights reserved.
-
-        </div>
-
     </div>
 
     <script>
-
         (function () {
-
             var links = document.querySelectorAll(".nav a");
-
-            var ids = Array.prototype.map.call(links, function (a) { return a.getAttribute("href").slice(1); });
+            var ids = Array.prototype.map.call(links, function (a) {
+                return a.getAttribute("href").slice(1);
+            });
 
             function setActive() {
-
-                var doc = document.documentElement;
-
                 var body = document.body;
-
                 var scrollBottom = window.scrollY + window.innerHeight;
-
-                var docHeight = Math.max(body.scrollHeight, doc.scrollHeight);
-
+                var docHeight = Math.max(body.scrollHeight, document.documentElement.scrollHeight);
                 var atPageBottom = scrollBottom >= docHeight - 3;
-
                 var current = ids[0];
 
                 if (atPageBottom) {
-
                     current = ids[ids.length - 1];
-
                 } else {
-
                     var mid = window.scrollY + window.innerHeight * 0.25;
-
                     for (var i = 0; i < ids.length; i++) {
-
                         var el = document.getElementById(ids[i]);
-
-                        if (el && el.offsetTop <= mid) current = ids[i];
-
+                        if (el && el.offsetTop <= mid) {
+                            current = ids[i];
+                        }
                     }
-
                 }
 
                 links.forEach(function (a) {
-
                     a.classList.toggle("active", a.getAttribute("href") === "#" + current);
-
                 });
-
             }
 
             window.addEventListener("scroll", setActive, { passive: true });
-
             window.addEventListener("resize", setActive);
-
             setActive();
-
         })();
-
     </script>
-
 </body>
-
 </html>
